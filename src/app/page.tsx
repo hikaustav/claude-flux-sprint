@@ -15,10 +15,10 @@ const workImg4 = "https://www.figma.com/api/mcp/asset/f85569eb-34d5-4468-b91d-52
 const newsImg1 = "https://www.figma.com/api/mcp/asset/371ac913-5c56-490f-8ffc-fa6a2dc930c9";
 const newsImg2 = "https://www.figma.com/api/mcp/asset/47044783-b37c-4af0-84ab-1d2a29be0b30";
 const newsImg3 = "https://www.figma.com/api/mcp/asset/f68533a1-86af-46cb-9723-7df0e731d805";
-const logoMarko = "https://www.figma.com/api/mcp/asset/d7d0a92a-5868-4583-b7d6-90711b9396a4";
-const logoLukas = "https://www.figma.com/api/mcp/asset/c047103f-3b1e-4a83-90b3-9f4cfd73158f";
-const logoSofia = "https://www.figma.com/api/mcp/asset/5c587977-cad4-445e-884e-690c5007359c";
-const logoSarah = "https://www.figma.com/api/mcp/asset/9ad485f0-1e2a-4431-901d-8125f27439f7";
+const logoLukas = "https://www.figma.com/api/mcp/asset/45f967c7-fa1a-4ed9-98f9-2cdfd46e8033";
+const logoMarko = "https://www.figma.com/api/mcp/asset/43d53d2f-fb8c-4094-a1cc-66a3b8ce8756";
+const logoSarah = "https://www.figma.com/api/mcp/asset/e02351ca-7458-4cfc-bbf5-dd2d0b08c360";
+const logoSofia = "https://www.figma.com/api/mcp/asset/c59178be-8331-4d7c-9ee2-2d3168821248";
 
 const services = [
   { num: "[ 1 ]", title: "Brand Discovery", img: serviceImg1 },
@@ -38,6 +38,7 @@ const testimonials = [
   {
     name: "Lukas Weber",
     logo: logoLukas,
+    logoW: 137.733, logoH: 19.263,
     quote: "Professional, precise, and incredibly fast at handling complex product visualizations and templates.",
     rotate: "rotate-[2.9deg]",
     pos: "md:left-[676px] md:top-[272px]",
@@ -45,6 +46,7 @@ const testimonials = [
   {
     name: "Marko Stojković",
     logo: logoMarko,
+    logoW: 142.749, logoH: 18.97,
     quote: "A brilliant creative partner who transformed our vision into a unique, high-impact brand identity. Their ability to craft everything from custom mascots to polished logos is truly impressive.",
     rotate: "rotate-[-6.85deg]",
     pos: "md:left-[102px] md:top-[142px]",
@@ -52,6 +54,7 @@ const testimonials = [
   {
     name: "Sarah Jenkins",
     logo: logoSarah,
+    logoW: 108.537, logoH: 30.748,
     quote: "A strategic partner who balances stunning aesthetics with high-performance UX for complex platforms. They don't just make things look good; they solve business problems through visual clarity.",
     rotate: "rotate-[2.23deg]",
     pos: "md:left-[305px] md:top-[553px]",
@@ -59,6 +62,7 @@ const testimonials = [
   {
     name: "Sofia Martínez",
     logo: logoSofia,
+    logoW: 81.1, logoH: 36.174,
     quote: "An incredibly versatile designer who delivers consistent quality across a wide range of styles and formats.",
     rotate: "rotate-[-4.15deg]",
     pos: "md:left-[987px] md:top-[546px]",
@@ -563,7 +567,9 @@ export default function Home() {
             {/* Card 1 */}
             <div className="shrink-0 flex items-center justify-center" style={{ width: "75vw" }}>
               <div className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-full" style={{ transform: "rotate(-3.5deg)" }}>
-                <img src={testimonials[1].logo} alt={testimonials[1].name} style={{ maxHeight: 24, width: "auto", maxWidth: "100%", display: "block" }} />
+                <div style={{ position: "relative", width: testimonials[1].logoW, height: testimonials[1].logoH, flexShrink: 0 }}>
+                  <img src={testimonials[1].logo} alt={testimonials[1].name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none" }} />
+                </div>
                 <p className="text-[#1f1f1f] text-[16px] font-normal leading-[1.3] tracking-[-0.04em]">{testimonials[1].quote}</p>
                 <p className="text-black text-[14px] font-black uppercase tracking-[-0.04em] leading-[1.1]">{testimonials[1].name}</p>
               </div>
@@ -571,7 +577,9 @@ export default function Home() {
             {/* Card 2 — peeks from right */}
             <div className="shrink-0 flex items-center justify-center" style={{ width: "75vw", marginLeft: -10 }}>
               <div className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-full" style={{ transform: "rotate(2deg)" }}>
-                <img src={testimonials[3].logo} alt={testimonials[3].name} style={{ maxHeight: 24, width: "auto", maxWidth: "100%", display: "block" }} />
+                <div style={{ position: "relative", width: testimonials[3].logoW, height: testimonials[3].logoH, flexShrink: 0 }}>
+                  <img src={testimonials[3].logo} alt={testimonials[3].name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none" }} />
+                </div>
                 <p className="text-[#1f1f1f] text-[16px] font-normal leading-[1.3] tracking-[-0.04em]">{testimonials[3].quote}</p>
                 <p className="text-black text-[14px] font-black uppercase tracking-[-0.04em] leading-[1.1]">{testimonials[3].name}</p>
               </div>
@@ -591,10 +599,10 @@ export default function Home() {
         </h2>
         {/* Cards — scattered absolutely, positions as % of 1440px canvas */}
         {[
-          { name: testimonials[1].name, logo: testimonials[1].logo, quote: testimonials[1].quote, rotate: -6.85, left: "7.08vw",   top: 142 },
-          { name: testimonials[0].name, logo: testimonials[0].logo, quote: testimonials[0].quote, rotate:  2.9,  left: "46.94vw",  top: 272 },
-          { name: testimonials[2].name, logo: testimonials[2].logo, quote: testimonials[2].quote, rotate:  2.23, left: "21.18vw",  top: 553 },
-          { name: testimonials[3].name, logo: testimonials[3].logo, quote: testimonials[3].quote, rotate: -4.15, left: "68.54vw",  top: 546 },
+          { name: testimonials[1].name, logo: testimonials[1].logo, logoW: testimonials[1].logoW, logoH: testimonials[1].logoH, quote: testimonials[1].quote, rotate: -6.85, left: "7.08vw",   top: 142 },
+          { name: testimonials[0].name, logo: testimonials[0].logo, logoW: testimonials[0].logoW, logoH: testimonials[0].logoH, quote: testimonials[0].quote, rotate:  2.9,  left: "46.94vw",  top: 272 },
+          { name: testimonials[2].name, logo: testimonials[2].logo, logoW: testimonials[2].logoW, logoH: testimonials[2].logoH, quote: testimonials[2].quote, rotate:  2.23, left: "21.18vw",  top: 553 },
+          { name: testimonials[3].name, logo: testimonials[3].logo, logoW: testimonials[3].logoW, logoH: testimonials[3].logoH, quote: testimonials[3].quote, rotate: -4.15, left: "68.54vw",  top: 546 },
         ].map((card, i) => (
           <div
             key={i}
@@ -605,7 +613,9 @@ export default function Home() {
               className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-[353px]"
               style={{ transform: `rotate(${card.rotate}deg)` }}
             >
-              <img src={card.logo} alt={card.name} style={{ maxHeight: 28, width: "auto", maxWidth: "100%", display: "block" }} />
+              <div style={{ position: "relative", width: card.logoW, height: card.logoH, flexShrink: 0 }}>
+                <img src={card.logo} alt={card.name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none" }} />
+              </div>
               <p className="text-[#1f1f1f] text-[18px] font-normal leading-[1.3] tracking-[-0.04em]">{card.quote}</p>
               <p className="text-black text-[16px] font-black uppercase tracking-[-0.04em] leading-[1.1]">{card.name}</p>
             </div>
