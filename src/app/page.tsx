@@ -563,7 +563,7 @@ export default function Home() {
             {/* Card 1 */}
             <div className="shrink-0 flex items-center justify-center" style={{ width: "75vw" }}>
               <div className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-full" style={{ transform: "rotate(-3.5deg)" }}>
-                <img src={testimonials[1].logo} alt={testimonials[1].name} className="h-5 w-auto object-contain object-left" />
+                <img src={testimonials[1].logo} alt={testimonials[1].name} style={{ maxHeight: 24, width: "auto", maxWidth: "100%", display: "block" }} />
                 <p className="text-[#1f1f1f] text-[16px] font-normal leading-[1.3] tracking-[-0.04em]">{testimonials[1].quote}</p>
                 <p className="text-black text-[14px] font-black uppercase tracking-[-0.04em] leading-[1.1]">{testimonials[1].name}</p>
               </div>
@@ -571,7 +571,7 @@ export default function Home() {
             {/* Card 2 — peeks from right */}
             <div className="shrink-0 flex items-center justify-center" style={{ width: "75vw", marginLeft: -10 }}>
               <div className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-full" style={{ transform: "rotate(2deg)" }}>
-                <img src={testimonials[3].logo} alt={testimonials[3].name} className="h-5 w-auto object-contain object-left" />
+                <img src={testimonials[3].logo} alt={testimonials[3].name} style={{ maxHeight: 24, width: "auto", maxWidth: "100%", display: "block" }} />
                 <p className="text-[#1f1f1f] text-[16px] font-normal leading-[1.3] tracking-[-0.04em]">{testimonials[3].quote}</p>
                 <p className="text-black text-[14px] font-black uppercase tracking-[-0.04em] leading-[1.1]">{testimonials[3].name}</p>
               </div>
@@ -605,7 +605,7 @@ export default function Home() {
               className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-[353px]"
               style={{ transform: `rotate(${card.rotate}deg)` }}
             >
-              <img src={card.logo} alt={card.name} className="h-6 w-auto object-contain object-left" />
+              <img src={card.logo} alt={card.name} style={{ maxHeight: 28, width: "auto", maxWidth: "100%", display: "block" }} />
               <p className="text-[#1f1f1f] text-[18px] font-normal leading-[1.3] tracking-[-0.04em]">{card.quote}</p>
               <p className="text-black text-[16px] font-black uppercase tracking-[-0.04em] leading-[1.1]">{card.name}</p>
             </div>
