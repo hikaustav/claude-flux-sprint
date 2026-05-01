@@ -154,18 +154,18 @@ export default function Home() {
           </button>
         </nav>
 
-        {/* ── Mobile content: all left-aligned, pushed to bottom ── */}
-        <div className="md:hidden relative flex flex-col flex-1 justify-end pb-6 gap-4">
-          {/* Greeting + Name */}
-          <div className="flex flex-col items-start w-full">
+        {/* ── Mobile content: centered name, bio at bottom ── */}
+        <div className="md:hidden relative flex flex-col flex-1 justify-end pb-8 gap-8">
+          {/* Greeting + Name — centered */}
+          <div className="flex flex-col items-center w-full">
             <p
-              className="font-[family-name:var(--font-geist-mono)] text-white uppercase text-[14px] leading-[1.1]"
+              className="font-[family-name:var(--font-geist-mono)] text-white uppercase text-[14px] leading-[1.1] mb-1"
               style={{ mixBlendMode: "overlay" }}
             >
               [ Hello i&apos;m ]
             </p>
             <h1
-              className="text-white font-medium capitalize w-full"
+              className="text-white font-medium capitalize text-center w-full"
               style={{ fontSize: "26vw", letterSpacing: "-0.07em", lineHeight: 0.88, mixBlendMode: "overlay" }}
             >
               Harvey Specter
