@@ -88,14 +88,23 @@ export default function Home() {
           style={{ objectPosition: "50% 20%" }}
         />
 
-        {/* Progressive blur */}
+        {/* Progressive blur — desktop full overlay */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="hidden md:block absolute inset-0 pointer-events-none"
           style={{
             backdropFilter: "blur(14px)",
             WebkitBackdropFilter: "blur(14px)",
             maskImage: "linear-gradient(to bottom, transparent 45%, rgba(0,0,0,0.6) 65%, black 80%)",
             WebkitMaskImage: "linear-gradient(to bottom, transparent 45%, rgba(0,0,0,0.6) 65%, black 80%)",
+          }}
+        />
+        {/* Mobile blur — flat rectangular bottom panel, matching Figma */}
+        <div
+          className="md:hidden absolute bottom-0 left-0 right-0 pointer-events-none"
+          style={{
+            height: 349,
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
           }}
         />
 
@@ -154,25 +163,27 @@ export default function Home() {
           </button>
         </nav>
 
-        {/* ── Mobile content: name + description + CTA grouped, pushed to bottom ── */}
-        <div className="md:hidden relative flex flex-col flex-1 justify-end pb-8 gap-5">
-          {/* Name */}
-          <div className="flex flex-col items-start w-full">
-            <p
-              className="font-[family-name:var(--font-geist-mono)] text-white uppercase text-sm leading-[1.1]"
-              style={{ mixBlendMode: "overlay", marginBottom: "-8px" }}
-            >
-              [ Hello i&apos;m ]
-            </p>
+        {/* ── Mobile content: name centered top, bio+CTA bottom ── */}
+        <div className="md:hidden relative flex flex-col flex-1 justify-between pb-6">
+          {/* Name group — centered */}
+          <div className="flex flex-col items-center w-full">
+            <div className="flex items-center justify-center w-full px-[18px]">
+              <p
+                className="font-[family-name:var(--font-geist-mono)] text-white uppercase text-[14px] leading-[1.1]"
+                style={{ mixBlendMode: "overlay" }}
+              >
+                [ Hello i&apos;m ]
+              </p>
+            </div>
             <h1
-              className="text-white font-medium capitalize w-full"
-              style={{ fontSize: "26vw", letterSpacing: "-0.07em", lineHeight: 0.88, mixBlendMode: "overlay" }}
+              className="text-white font-medium capitalize text-center w-full"
+              style={{ fontSize: "26vw", letterSpacing: "-0.07em", lineHeight: 0.8, mixBlendMode: "overlay" }}
             >
-              Harvey Specter
+              Harvey{"   "}Specter
             </h1>
           </div>
           {/* Description + CTA */}
-          <div className="flex flex-col gap-[17px] items-start w-[293px]">
+          <div className="flex flex-col gap-[17px] items-start w-[293px]" style={{ marginLeft: 25 }}>
             <p className="font-bold italic text-[#1f1f1f] text-[14px] tracking-[-0.56px] leading-[1.1] uppercase">
               <span>H.Studio is a </span>
               <span className="font-normal">full-service</span>
