@@ -1,5 +1,6 @@
-"use client";
-import { useState } from "react";
+import { client } from "@/sanity/lib/client";
+import { worksQuery } from "@/sanity/queries";
+import { MobileMenuButton } from "./components/MobileMenu";
 
 const heroImg = "https://www.figma.com/api/mcp/asset/70bd3925-df9d-40e3-b81e-68f8a6fc939b";
 const aboutImg = "https://www.figma.com/api/mcp/asset/4a142a70-e9cd-45ba-a039-049153adb5c9";
@@ -27,12 +28,7 @@ const services = [
   { num: "[ 4 ]", title: "Photography", img: serviceImg4 },
 ];
 
-const works = [
-  { title: "Surfers paradise", tags: ["Social Media", "Photography"], img: workImg1 },
-  { title: "Cyberpunk caffe", tags: ["Social Media", "Photography"], img: workImg2 },
-  { title: "Agency 976", tags: ["Social Media", "Photography"], img: workImg3 },
-  { title: "Minimal Playground", tags: ["Social Media", "Photography"], img: workImg4 },
-];
+const staticWorkImgs = [workImg1, workImg2, workImg3, workImg4];
 
 const testimonials = [
   {
@@ -70,8 +66,23 @@ const testimonials = [
 ];
 
 
-export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
+type SanityWork = {
+  _id: string;
+  title: string;
+  tags: string[];
+  order: number;
+  image?: { asset?: { url: string }; hotspot?: unknown };
+};
+
+export default async function Home() {
+  const sanityWorks: SanityWork[] = await client.fetch(worksQuery, {}, { next: { revalidate: 60 } });
+
+  const works = sanityWorks.map((w, i) => ({
+    title: w.title,
+    tags: w.tags ?? [],
+    img: w.image?.asset?.url ?? staticWorkImgs[i] ?? staticWorkImgs[0],
+  }));
+
   const navLinks = ["About", "Services", "Projects", "News", "Contact"];
 
   return (
@@ -99,38 +110,8 @@ export default function Home() {
           }}
         />
 
-        {/* Mobile menu overlay */}
-        {menuOpen && (
-          <div className="md:hidden fixed inset-0 bg-black/95 flex flex-col px-6 pt-6 pb-10" style={{ zIndex: 50 }}>
-            <div className="flex items-center justify-between mb-12">
-              <span className="text-base font-semibold tracking-[-0.04em] text-white capitalize">H.Studio</span>
-              <button onClick={() => setMenuOpen(false)} aria-label="Close menu" className="text-white w-6 h-6 flex items-center justify-center">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M2 2L18 18M18 2L2 18" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-              </button>
-            </div>
-            <nav className="flex flex-col gap-6 flex-1">
-              {navLinks.map((l) => (
-                <a
-                  key={l}
-                  href={`#${l.toLowerCase()}`}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-white text-4xl font-light tracking-[-0.04em] uppercase leading-none hover:opacity-60 transition-opacity"
-                >
-                  {l}
-                </a>
-              ))}
-            </nav>
-            <a
-              href="#contact"
-              onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-center px-4 py-3 bg-white rounded-[24px] text-black text-sm font-medium tracking-[-0.04em]"
-            >
-              Let&apos;s talk
-            </a>
-          </div>
-        )}
+        {/* Mobile menu */}
+        <MobileMenuButton />
 
         {/* Nav */}
         <nav className="relative flex items-center justify-between py-6 shrink-0">
@@ -143,15 +124,6 @@ export default function Home() {
           <a href="#contact" className="hidden md:flex items-center justify-center px-4 py-3 bg-black rounded-[24px] text-white text-sm font-medium tracking-[-0.04em]">
             Let&apos;s talk
           </a>
-          <button
-            className="md:hidden flex flex-col gap-[6px] w-6"
-            aria-label="Open menu"
-            onClick={() => setMenuOpen(true)}
-          >
-            <span className="block h-[1.5px] w-full bg-black" />
-            <span className="block h-[1.5px] w-full bg-black" />
-            <span className="block h-[1.5px] w-full bg-black" />
-          </button>
         </nav>
 
         {/* ── Mobile content: centered name, bio at bottom ── */}
@@ -421,7 +393,7 @@ export default function Home() {
               {/* Card 1 — Surfers Paradise — tall aspect */}
               <div className="flex flex-col gap-[10px]">
                 <div className="relative w-full overflow-hidden" style={{ aspectRatio: "676/744" }}>
-                  <img src={workImg1} alt="Surfers paradise" className="absolute inset-0 w-full h-full object-cover" />
+                  {works[0]?.img && <img src={works[0].img} alt={works[0].title} className="absolute inset-0 w-full h-full object-cover" />}
                   <div className="absolute bottom-4 left-4 flex gap-3">
                     {works[0].tags.map((t) => (
                       <span key={t} className="backdrop-blur-[10px] bg-white/30 px-2 py-1 rounded-[24px] text-[#111] text-sm font-medium tracking-[-0.04em]">{t}</span>
@@ -438,7 +410,7 @@ export default function Home() {
               {/* Card 2 — Cyberpunk Caffe — shorter aspect */}
               <div className="flex flex-col gap-[10px]" style={{ marginTop: "1.74%" }}>
                 <div className="relative w-full overflow-hidden" style={{ aspectRatio: "676/699" }}>
-                  <img src={workImg2} alt="Cyberpunk caffe" className="absolute inset-0 w-full h-full object-cover" />
+                  {works[1]?.img && <img src={works[1].img} alt={works[1].title} className="absolute inset-0 w-full h-full object-cover" />}
                   <div className="absolute bottom-4 left-4 flex gap-3">
                     {works[1].tags.map((t) => (
                       <span key={t} className="backdrop-blur-[10px] bg-white/30 px-2 py-1 rounded-[24px] text-[#111] text-sm font-medium tracking-[-0.04em]">{t}</span>
@@ -477,7 +449,7 @@ export default function Home() {
               {/* Card 3 — Agency 976 — shorter aspect */}
               <div className="flex flex-col gap-[10px]">
                 <div className="relative w-full overflow-hidden" style={{ aspectRatio: "676/699" }}>
-                  <img src={workImg3} alt="Agency 976" className="absolute inset-0 w-full h-full object-cover" />
+                  {works[2]?.img && <img src={works[2].img} alt={works[2].title} className="absolute inset-0 w-full h-full object-cover" />}
                   <div className="absolute bottom-4 left-4 flex gap-3">
                     {works[2].tags.map((t) => (
                       <span key={t} className="backdrop-blur-[10px] bg-white/30 px-2 py-1 rounded-[24px] text-[#111] text-sm font-medium tracking-[-0.04em]">{t}</span>
@@ -494,7 +466,7 @@ export default function Home() {
               {/* Card 4 — Minimal Playground — tall aspect, gap 117/1376 ≈ 8.5% */}
               <div className="flex flex-col gap-[10px]" style={{ marginTop: "8.5%" }}>
                 <div className="relative w-full overflow-hidden" style={{ aspectRatio: "676/744" }}>
-                  <img src={workImg4} alt="Minimal Playground" className="absolute inset-0 w-full h-full object-cover" />
+                  {works[3]?.img && <img src={works[3].img} alt={works[3].title} className="absolute inset-0 w-full h-full object-cover" />}
                   <div className="absolute bottom-4 left-4 flex gap-3">
                     {works[3].tags.map((t) => (
                       <span key={t} className="backdrop-blur-[10px] bg-white/30 px-2 py-1 rounded-[24px] text-[#111] text-sm font-medium tracking-[-0.04em]">{t}</span>
