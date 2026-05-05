@@ -12,7 +12,10 @@
       "Bash(git push *)",
       "mcp__figma__get_design_context",
       "mcp__figma__get_metadata",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(env)",
+      "Bash(node -e \"process.argv.forEach\\(a => console.log\\(a\\)\\)\")",
+      "Bash(node --localstorage-file)"
     ]
   }
 }

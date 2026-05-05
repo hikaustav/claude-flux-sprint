@@ -1,6 +1,7 @@
 import { client } from "@/sanity/lib/client";
 import { worksQuery } from "@/sanity/queries";
 import { MobileMenuButton } from "./components/MobileMenu";
+import { TestimonialsSlider } from "./components/TestimonialsSlider";
 
 const heroImg = "https://www.figma.com/api/mcp/asset/70bd3925-df9d-40e3-b81e-68f8a6fc939b";
 const aboutImg = "https://www.figma.com/api/mcp/asset/4a142a70-e9cd-45ba-a039-049153adb5c9";
@@ -99,14 +100,27 @@ export default async function Home() {
           style={{ objectPosition: "50% 20%" }}
         />
 
-        {/* Progressive blur */}
+        {/* Mobile: progressive blur fade at bottom */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="md:hidden absolute inset-0 pointer-events-none"
           style={{
             backdropFilter: "blur(14px)",
             WebkitBackdropFilter: "blur(14px)",
             maskImage: "linear-gradient(to bottom, transparent 45%, rgba(0,0,0,0.6) 65%, black 80%)",
             WebkitMaskImage: "linear-gradient(to bottom, transparent 45%, rgba(0,0,0,0.6) 65%, black 80%)",
+          }}
+        />
+
+        {/* Desktop: frosted glass — top uses max() so it always starts below the H1's bottom edge (~530px max) */}
+        <div
+          className="hidden md:block absolute left-0 w-full pointer-events-none"
+          style={{
+            top: "max(535px, 60%)",
+            bottom: 0,
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 40%, black 70%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 40%, black 70%)",
           }}
         />
 
@@ -127,7 +141,7 @@ export default async function Home() {
         </nav>
 
         {/* ── Mobile content: centered name, bio at bottom ── */}
-        <div className="md:hidden relative flex flex-col flex-1 justify-end pb-8 gap-8">
+        <div className="md:hidden relative flex flex-col flex-1 justify-end items-center pb-8 gap-8">
           {/* Greeting + Name — centered */}
           <div className="flex flex-col items-center w-full">
             <p
@@ -144,8 +158,8 @@ export default async function Home() {
             </h1>
           </div>
           {/* Description + CTA */}
-          <div className="flex flex-col gap-[17px] items-start w-[293px]">
-            <p className="font-bold italic text-[#1f1f1f] text-[14px] tracking-[-0.56px] leading-[1.1] uppercase">
+          <div className="flex flex-col gap-[17px] items-center w-[293px]">
+            <p className="font-bold italic text-[#1f1f1f] text-[14px] tracking-[-0.56px] leading-[1.1] uppercase text-center">
               <span>H.Studio is a </span>
               <span className="font-normal">full-service</span>
               <span> creative studio creating beautiful digital experiences and products. We are an </span>
@@ -160,32 +174,36 @@ export default async function Home() {
 
         {/* ── Desktop content ── */}
         <div className="hidden md:flex flex-col flex-1 relative" style={{ paddingTop: "min(240px, 30vh)" }}>
-          {/* Label */}
-          <p
-            className="font-[family-name:var(--font-geist-mono)] text-white uppercase text-sm leading-[1.1]"
-            style={{ mixBlendMode: "overlay", marginBottom: "4px" }}
-          >
-            [ Hello i&apos;m ]
-          </p>
-          {/* H1 */}
+          {/* Greeting */}
+          <div className="flex items-center justify-start w-full px-[18px]" style={{ marginBottom: -15 }}>
+            <p
+              className="font-[family-name:var(--font-geist-mono)] text-white uppercase text-sm leading-[1.1]"
+              style={{ mixBlendMode: "overlay" }}
+            >
+              [ Hello i&apos;m ]
+            </p>
+          </div>
+          {/* H1 — ends well above the 60% blur boundary */}
           <h1
-            className="text-white font-medium capitalize whitespace-nowrap w-full"
-            style={{ fontSize: "13.75vw", letterSpacing: "-0.07em", lineHeight: 0.88, mixBlendMode: "overlay" }}
+            className="text-white font-medium capitalize text-center w-full"
+            style={{ fontSize: "13.75vw", letterSpacing: "-0.07em", lineHeight: 1.1, mixBlendMode: "overlay" }}
           >
             Harvey&nbsp;&nbsp;&nbsp;Specter
           </h1>
-          {/* Description + CTA — right-aligned, flows just below H1 */}
-          <div className="flex flex-col gap-[17px] items-start self-end w-[294px] mt-5">
-            <p className="font-bold italic text-[#1f1f1f] text-[14px] tracking-[-0.56px] leading-[1.1] uppercase">
-              <span>H.Studio is a </span>
-              <span className="font-normal">full-service</span>
-              <span> creative studio creating beautiful digital experiences and products. We are an </span>
-              <span className="font-normal">award winning</span>
-              <span> design and art group specializing in branding, web design and engineering.</span>
-            </p>
-            <a href="#contact" className="flex items-center justify-center px-4 py-3 bg-black rounded-[24px] text-white text-sm font-medium tracking-[-0.04em]">
-              Let&apos;s talk
-            </a>
+          {/* Description + CTA — centered at md, right-aligned at lg+ */}
+          <div className="flex flex-col items-end w-full mt-5">
+            <div className="flex flex-col gap-[17px] items-start w-[294px] text-left mx-0">
+              <p className="font-bold italic text-[#1f1f1f] text-[14px] tracking-[-0.56px] leading-[1.1] uppercase">
+                <span>H.Studio is a </span>
+                <span className="font-normal">full-service</span>
+                <span> creative studio creating beautiful digital experiences and products. We are an </span>
+                <span className="font-normal">award winning</span>
+                <span> design and art group specializing in branding, web design and engineering.</span>
+              </p>
+              <a href="#contact" className="flex items-center justify-center px-4 py-3 bg-black rounded-[24px] text-white text-sm font-medium tracking-[-0.04em]">
+                Let&apos;s talk
+              </a>
+            </div>
           </div>
         </div>
 
@@ -528,68 +546,52 @@ export default async function Home() {
       </section>
       {/* ── Testimonials ── */}
 
-      {/* Mobile */}
-      <section className="md:hidden px-4 py-16 flex flex-col gap-8">
-        <h2 className="font-medium text-black capitalize text-center leading-[0.8] tracking-[-0.07em]" style={{ fontSize: 64 }}>
-          Testimonials
-        </h2>
-        {/* 2 cards, horizontal peek layout */}
-        <div className="flex items-center -mx-4 overflow-hidden">
-          <div className="flex items-center pl-4" style={{ gap: 0 }}>
-            {/* Card 1 */}
-            <div className="shrink-0 flex items-center justify-center" style={{ width: "75vw" }}>
-              <div className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-full" style={{ transform: "rotate(-3.5deg)" }}>
-                <div style={{ position: "relative", width: testimonials[1].logoW, height: testimonials[1].logoH, flexShrink: 0 }}>
-                  <img src={testimonials[1].logo} alt={testimonials[1].name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none" }} />
-                </div>
-                <p className="text-[#1f1f1f] text-[16px] font-normal leading-[1.3] tracking-[-0.04em]">{testimonials[1].quote}</p>
-                <p className="text-black text-[14px] font-black uppercase tracking-[-0.04em] leading-[1.1]">{testimonials[1].name}</p>
-              </div>
-            </div>
-            {/* Card 2 — peeks from right */}
-            <div className="shrink-0 flex items-center justify-center" style={{ width: "75vw", marginLeft: -10 }}>
-              <div className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-full" style={{ transform: "rotate(2deg)" }}>
-                <div style={{ position: "relative", width: testimonials[3].logoW, height: testimonials[3].logoH, flexShrink: 0 }}>
-                  <img src={testimonials[3].logo} alt={testimonials[3].name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none" }} />
-                </div>
-                <p className="text-[#1f1f1f] text-[16px] font-normal leading-[1.3] tracking-[-0.04em]">{testimonials[3].quote}</p>
-                <p className="text-black text-[14px] font-black uppercase tracking-[-0.04em] leading-[1.1]">{testimonials[3].name}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Desktop */}
-      <section className="hidden md:block relative overflow-hidden" style={{ height: 987 }}>
-        {/* Heading — centered in section */}
+      {/* Mobile + Tablet slider (≤ 768px) */}
+      <section className="min-[769px]:hidden py-16 flex flex-col gap-8 overflow-x-clip">
         <h2
-          className="absolute font-medium text-black capitalize text-center leading-[1.1] tracking-[-0.07em] w-full"
-          style={{ fontSize: "13.75vw", top: "50%", transform: "translateY(-50%)" }}
+          className="font-medium text-black capitalize text-center leading-[0.85] tracking-[-0.07em] px-4"
+          style={{ fontSize: "clamp(48px, 13vw, 80px)" }}
         >
           Testimonials
         </h2>
-        {/* Cards — scattered absolutely, positions as % of 1440px canvas */}
+        <TestimonialsSlider
+          testimonials={testimonials.map((t) => ({
+            name: t.name,
+            logo: t.logo,
+            logoW: t.logoW,
+            logoH: t.logoH,
+            quote: t.quote,
+            rotate: parseFloat(t.rotate.replace("rotate-[", "").replace("deg]", "")),
+          }))}
+        />
+      </section>
+
+      {/* Desktop scattered layout (≥ 769px) — all positions/sizes in vw so it scales with viewport */}
+      <section className="hidden min-[769px]:block relative overflow-hidden" style={{ height: "clamp(500px, 68.5vw, 987px)" }}>
+        {/* Heading — centered */}
+        <h2
+          className="absolute font-medium text-black capitalize text-center leading-[1.1] tracking-[-0.07em] w-full"
+          style={{ fontSize: "clamp(48px, 13.75vw, 198px)", top: "50%", transform: "translateY(-50%)" }}
+        >
+          Testimonials
+        </h2>
+        {/* Cards — left in vw, top in % of section height (derived from 1440×987 design canvas) */}
         {[
-          { name: testimonials[1].name, logo: testimonials[1].logo, logoW: testimonials[1].logoW, logoH: testimonials[1].logoH, quote: testimonials[1].quote, rotate: -6.85, left: "7.08vw",   top: 142 },
-          { name: testimonials[0].name, logo: testimonials[0].logo, logoW: testimonials[0].logoW, logoH: testimonials[0].logoH, quote: testimonials[0].quote, rotate:  2.9,  left: "46.94vw",  top: 272 },
-          { name: testimonials[2].name, logo: testimonials[2].logo, logoW: testimonials[2].logoW, logoH: testimonials[2].logoH, quote: testimonials[2].quote, rotate:  2.23, left: "21.18vw",  top: 553 },
-          { name: testimonials[3].name, logo: testimonials[3].logo, logoW: testimonials[3].logoW, logoH: testimonials[3].logoH, quote: testimonials[3].quote, rotate: -4.15, left: "68.54vw",  top: 546 },
+          { name: testimonials[1].name, logo: testimonials[1].logo, logoW: testimonials[1].logoW, logoH: testimonials[1].logoH, quote: testimonials[1].quote, rotate: -6.85, left: "7.08vw",  top: "14.4%" },
+          { name: testimonials[0].name, logo: testimonials[0].logo, logoW: testimonials[0].logoW, logoH: testimonials[0].logoH, quote: testimonials[0].quote, rotate:  2.9,  left: "46.94vw", top: "27.6%" },
+          { name: testimonials[2].name, logo: testimonials[2].logo, logoW: testimonials[2].logoW, logoH: testimonials[2].logoH, quote: testimonials[2].quote, rotate:  2.23, left: "21.18vw", top: "56%" },
+          { name: testimonials[3].name, logo: testimonials[3].logo, logoW: testimonials[3].logoW, logoH: testimonials[3].logoH, quote: testimonials[3].quote, rotate: -4.15, left: "68.54vw", top: "55.3%" },
         ].map((card, i) => (
-          <div
-            key={i}
-            className="absolute"
-            style={{ left: card.left, top: card.top }}
-          >
+          <div key={i} className="absolute" style={{ left: card.left, top: card.top, width: "clamp(200px, 24.5vw, 353px)" }}>
             <div
-              className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-[353px]"
+              className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-full"
               style={{ transform: `rotate(${card.rotate}deg)` }}
             >
-              <div style={{ position: "relative", width: card.logoW, height: card.logoH, flexShrink: 0 }}>
+              <div style={{ position: "relative", width: card.logoW, height: card.logoH, flexShrink: 0, maxWidth: "100%" }}>
                 <img src={card.logo} alt={card.name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none" }} />
               </div>
-              <p className="text-[#1f1f1f] text-[18px] font-normal leading-[1.3] tracking-[-0.04em]">{card.quote}</p>
-              <p className="text-black text-[16px] font-black uppercase tracking-[-0.04em] leading-[1.1]">{card.name}</p>
+              <p className="text-[#1f1f1f] text-[clamp(13px,1.25vw,18px)] font-normal leading-[1.3] tracking-[-0.04em]">{card.quote}</p>
+              <p className="text-black text-[clamp(11px,1.1vw,16px)] font-black uppercase tracking-[-0.04em] leading-[1.1]">{card.name}</p>
             </div>
           </div>
         ))}
@@ -644,11 +646,15 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Cards block — ml-auto anchors to right, card 3 bleeds off edge */}
-          <div className="flex items-start gap-8 ml-auto shrink-0">
+          {/* Cards block — below lg: scrollable; lg+: fixed 353px with ml-auto */}
+          <div
+            className="flex-1 overflow-x-auto -mr-4 md:-mr-8 lg:flex lg:overflow-hidden"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+          >
+          <div className="flex items-start gap-8 ml-auto" style={{ scrollSnapType: "x mandatory" }}>
 
           {/* Card 1 */}
-          <div className="flex flex-col gap-4 shrink-0 w-[353px]">
+          <div className="flex flex-col gap-4 shrink-0 w-[calc((100vw-336px)/2.2)] lg:w-[353px]" style={{ scrollSnapAlign: "start" }}>
             <div className="w-full overflow-hidden" style={{ aspectRatio: "353/469" }}>
               <img src={newsImg1} alt="" className="w-full h-full object-cover" />
             </div>
@@ -667,7 +673,7 @@ export default async function Home() {
           <div className="self-stretch shrink-0" style={{ width: 1, background: "rgba(31,31,31,0.15)" }} />
 
           {/* Card 2 — offset down */}
-          <div className="flex flex-col gap-4 shrink-0 w-[353px] pt-[120px]">
+          <div className="flex flex-col gap-4 shrink-0 pt-[120px] w-[calc((100vw-336px)/2.2)] lg:w-[353px]" style={{ scrollSnapAlign: "start" }}>
             <div className="w-full overflow-hidden" style={{ aspectRatio: "353/469" }}>
               <img src={newsImg2} alt="" className="w-full h-full object-cover" />
             </div>
@@ -685,8 +691,8 @@ export default async function Home() {
           {/* Divider */}
           <div className="self-stretch shrink-0" style={{ width: 1, background: "rgba(31,31,31,0.15)" }} />
 
-          {/* Card 3 — bleeds off right edge, clipped by section overflow-hidden */}
-          <div className="flex flex-col gap-4 shrink-0 w-[353px]">
+          {/* Card 3 */}
+          <div className="flex flex-col gap-4 shrink-0 w-[calc((100vw-336px)/2.2)] lg:w-[353px]" style={{ scrollSnapAlign: "start" }}>
             <div className="w-full overflow-hidden" style={{ aspectRatio: "353/469" }}>
               <img src={newsImg3} alt="" className="w-full h-full object-cover" />
             </div>
@@ -701,7 +707,8 @@ export default async function Home() {
             </a>
           </div>
 
-          </div>{/* end cards block */}
+          </div>{/* end inner flex */}
+          </div>{/* end scrollable wrapper */}
         </div>
 
       </section>
