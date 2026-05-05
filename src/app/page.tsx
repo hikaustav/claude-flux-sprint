@@ -124,12 +124,9 @@ export default async function Home() {
           }}
         />
 
-        {/* Mobile menu */}
-        <MobileMenuButton />
-
         {/* Nav */}
         <nav className="relative flex items-center justify-between py-6 shrink-0">
-          <span className="text-base font-semibold tracking-[-0.04em] text-black capitalize">H.Studio</span>
+          <span className="text-2xl md:text-base font-semibold tracking-[-0.04em] text-black capitalize">H.Studio</span>
           <div className="hidden md:flex items-center gap-14 text-base font-semibold tracking-[-0.04em] text-black capitalize">
             {navLinks.map((l) => (
               <a key={l} href={`#${l.toLowerCase()}`} className="hover:opacity-60 transition-opacity">{l}</a>
@@ -138,6 +135,7 @@ export default async function Home() {
           <a href="#contact" className="hidden md:flex items-center justify-center px-4 py-3 bg-black rounded-[24px] text-white text-sm font-medium tracking-[-0.04em]">
             Let&apos;s talk
           </a>
+          <MobileMenuButton />
         </nav>
 
         {/* ── Mobile content: centered name, bio at bottom ── */}
@@ -358,13 +356,24 @@ export default async function Home() {
             <div key={s.title} className="flex flex-col gap-2">
               <p className="font-[family-name:var(--font-geist-mono)] text-white text-sm uppercase leading-[1.1]">{s.num}</p>
               <div className="w-full h-px bg-white/40" />
-              <div className="flex flex-col md:flex-row items-start justify-between gap-4 pt-1">
-                <p className="font-bold italic text-white uppercase text-[28px] md:text-[36px] tracking-[-0.04em] leading-[1.1]">{s.title}</p>
+              {/* Mobile */}
+              <div className="flex flex-col gap-2 pt-1 md:hidden">
+                <p className="font-bold italic text-white uppercase text-[28px] tracking-[-0.04em] leading-[1.1]">{s.title}</p>
+                <p className="text-white text-sm font-normal leading-[1.3] tracking-[-0.04em]">
+                  Placeholder description of this service. Explain the value you provide and the outcomes clients can expect. Keep it to two or three sentences.
+                </p>
+                <div className="shrink-0 overflow-hidden aspect-square w-[26vw]">
+                  <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
+                </div>
+              </div>
+              {/* Desktop */}
+              <div className="hidden md:flex flex-row items-start justify-between gap-4 pt-1">
+                <p className="font-bold italic text-white uppercase text-[36px] tracking-[-0.04em] leading-[1.1]">{s.title}</p>
                 <div className="flex gap-6 items-start">
                   <p className="text-white text-sm font-normal leading-[1.3] tracking-[-0.04em] max-w-[393px]">
                     Placeholder description of this service. Explain the value you provide and the outcomes clients can expect. Keep it to two or three sentences.
                   </p>
-                  <div className="shrink-0 w-[100px] md:w-[151px] aspect-square overflow-hidden">
+                  <div className="shrink-0 -mr-8 overflow-hidden aspect-square w-[151px]">
                     <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
                   </div>
                 </div>

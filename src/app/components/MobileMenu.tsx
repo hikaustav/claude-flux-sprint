@@ -11,7 +11,7 @@ export function MobileMenuButton() {
       {menuOpen && (
         <div className="md:hidden fixed inset-0 bg-black/95 flex flex-col px-6 pt-6 pb-10" style={{ zIndex: 50 }}>
           <div className="flex items-center justify-between mb-12">
-            <span className="text-base font-semibold tracking-[-0.04em] text-white capitalize">H.Studio</span>
+            <span className="text-2xl font-semibold tracking-[-0.04em] text-white capitalize">H.Studio</span>
             <button onClick={() => setMenuOpen(false)} aria-label="Close menu" className="text-white w-6 h-6 flex items-center justify-center">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M2 2L18 18M18 2L2 18" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
@@ -40,13 +40,13 @@ export function MobileMenuButton() {
         </div>
       )}
       <button
-        className="md:hidden flex flex-col gap-[6px] w-6"
+        className="md:hidden flex flex-col gap-[7px] w-8"
         aria-label="Open menu"
         onClick={() => setMenuOpen(true)}
       >
-        <span className="block h-[1.5px] w-full bg-black" />
-        <span className="block h-[1.5px] w-full bg-black" />
-        <span className="block h-[1.5px] w-full bg-black" />
+        <span className="block h-[2px] w-full bg-black" />
+        <span className="block h-[2px] w-full bg-black" />
+        <span className="block h-[2px] w-full bg-black" />
       </button>
     </>
   );
