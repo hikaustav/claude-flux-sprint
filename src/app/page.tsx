@@ -1,6 +1,11 @@
 import { client } from "@/sanity/lib/client";
 import { worksQuery } from "@/sanity/queries";
-import { MobileMenuButton } from "./components/MobileMenu";
+import { MagneticButton } from "./components/MagneticButton";
+import { HeroParallax } from "./components/HeroParallax";
+import { FullWidthReveal } from "./components/FullWidthReveal";
+import { ServicesHover } from "./components/ServicesHover";
+import { TestimonialsParallax } from "./components/TestimonialsParallax";
+import { Navbar } from "./components/Navbar";
 import { TestimonialsSlider } from "./components/TestimonialsSlider";
 
 const heroImg = "https://www.figma.com/api/mcp/asset/70bd3925-df9d-40e3-b81e-68f8a6fc939b";
@@ -87,13 +92,21 @@ export default async function Home() {
   const navLinks = ["About", "Services", "Projects", "News", "Contact"];
 
   return (
-    <main className="bg-[#fafafa] font-[family-name:var(--font-inter)]">
+    <main className="bg-[#fafafa] font-[family-name:var(--font-inter)] relative">
+      <Navbar />
+      {/* Scrolling content sits above the sticky footer */}
+      <div className="relative z-10 bg-[#fafafa]">
 
       {/* ── Hero ── */}
-      <section className="relative h-screen overflow-hidden flex flex-col px-4 md:px-8">
+      <section id="hero-section" className="relative h-screen overflow-hidden flex flex-col px-4 md:px-8 pt-[80px]">
+        <HeroParallax />
+        <FullWidthReveal />
+        <ServicesHover />
+        <TestimonialsParallax />
 
         {/* BG */}
         <img
+          id="hero-bg"
           src={heroImg}
           alt=""
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
@@ -124,26 +137,13 @@ export default async function Home() {
           }}
         />
 
-        {/* Nav */}
-        <nav className="relative flex items-center justify-between py-6 shrink-0">
-          <span className="text-2xl md:text-base font-semibold tracking-[-0.04em] text-black capitalize">H.Studio</span>
-          <div className="hidden md:flex items-center gap-14 text-base font-semibold tracking-[-0.04em] text-black capitalize">
-            {navLinks.map((l) => (
-              <a key={l} href={`#${l.toLowerCase()}`} className="hover:opacity-60 transition-opacity">{l}</a>
-            ))}
-          </div>
-          <a href="#contact" className="hidden md:flex items-center justify-center px-4 py-3 bg-black rounded-[24px] text-white text-sm font-medium tracking-[-0.04em]">
-            Let&apos;s talk
-          </a>
-          <MobileMenuButton />
-        </nav>
-
-        {/* ── Mobile content: centered name, bio at bottom ── */}
+{/* ── Mobile content: centered name, bio at bottom ── */}
         <div className="md:hidden relative flex flex-col flex-1 justify-end items-center pb-8 gap-8">
           {/* Greeting + Name — centered */}
           <div className="flex flex-col items-center w-full">
             <p
-              className="font-[family-name:var(--font-geist-mono)] text-white uppercase text-[14px] leading-[1.1] mb-1"
+              id="hero-greeting-mobile"
+              className="font-[family-name:var(--font-geist-mono)] text-white uppercase text-[14px] leading-[1.1] mb-1 inline-block"
               style={{ mixBlendMode: "overlay" }}
             >
               [ Hello i&apos;m ]
@@ -152,7 +152,8 @@ export default async function Home() {
               className="text-white font-medium capitalize text-center w-full"
               style={{ fontSize: "26vw", letterSpacing: "-0.07em", lineHeight: 0.88, mixBlendMode: "overlay" }}
             >
-              Harvey Specter
+              <span id="hero-harvey-mobile" className="block">Harvey</span>
+              <span id="hero-specter-mobile" className="block">Specter</span>
             </h1>
           </div>
           {/* Description + CTA */}
@@ -164,9 +165,7 @@ export default async function Home() {
               <span className="font-normal">award winning</span>
               <span> design and art group specializing in branding, web design and engineering.</span>
             </p>
-            <a href="#contact" className="flex items-center justify-center px-4 py-3 bg-black rounded-[24px] text-white text-sm font-medium tracking-[-0.04em]">
-              Let&apos;s talk
-            </a>
+            <MagneticButton href="#contact">Let&apos;s talk</MagneticButton>
           </div>
         </div>
 
@@ -175,18 +174,21 @@ export default async function Home() {
           {/* Greeting */}
           <div className="flex items-center justify-start w-full px-[18px]" style={{ marginBottom: -15 }}>
             <p
-              className="font-[family-name:var(--font-geist-mono)] text-white uppercase text-sm leading-[1.1]"
+              id="hero-greeting-desktop"
+              className="font-[family-name:var(--font-geist-mono)] text-white uppercase text-sm leading-[1.1] inline-block"
               style={{ mixBlendMode: "overlay" }}
             >
               [ Hello i&apos;m ]
             </p>
           </div>
-          {/* H1 — ends well above the 60% blur boundary */}
+          {/* H1 */}
           <h1
             className="text-white font-medium capitalize text-center w-full"
             style={{ fontSize: "13.75vw", letterSpacing: "-0.07em", lineHeight: 1.1, mixBlendMode: "overlay" }}
           >
-            Harvey&nbsp;&nbsp;&nbsp;Specter
+            <span id="hero-harvey-desktop" className="inline-block">Harvey</span>
+            <span className="inline-block">&nbsp;&nbsp;&nbsp;</span>
+            <span id="hero-specter-desktop" className="inline-block">Specter</span>
           </h1>
           {/* Description + CTA — centered at md, right-aligned at lg+ */}
           <div className="flex flex-col items-end w-full mt-5">
@@ -198,9 +200,7 @@ export default async function Home() {
                 <span className="font-normal">award winning</span>
                 <span> design and art group specializing in branding, web design and engineering.</span>
               </p>
-              <a href="#contact" className="flex items-center justify-center px-4 py-3 bg-black rounded-[24px] text-white text-sm font-medium tracking-[-0.04em]">
-                Let&apos;s talk
-              </a>
+              <MagneticButton href="#contact">Let&apos;s talk</MagneticButton>
             </div>
           </div>
         </div>
@@ -218,8 +218,8 @@ export default async function Home() {
             <div className="w-full h-px bg-[#1f1f1f]" />
           </div>
 
-          {/* ── Desktop layout — fluid vw scaling, indents proportional to 1440px canvas ── */}
-          <div className="hidden md:flex flex-col gap-2">
+          {/* ── Desktop layout — staggered, centered as a block ── */}
+          <div className="hidden md:flex flex-col gap-2 mx-auto">
             <div className="flex items-start gap-3">
               <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)" }}>
                 A creative director&nbsp;&nbsp;&nbsp;/
@@ -275,7 +275,7 @@ export default async function Home() {
       </section>
 
       {/* ── About Photo ── */}
-      <section className="px-4 md:px-8 py-[48px] md:py-[80px]">
+      <section id="about-photo-section" className="px-4 md:px-8 py-[48px] md:py-[80px]">
         {/* Corner bracket SVG used around the paragraph */}
 
         {/* ── Desktop ── */}
@@ -285,7 +285,7 @@ export default async function Home() {
           </p>
           <div className="flex items-end gap-8 w-[983px]">
             {/* Paragraph with corner brackets */}
-            <div className="flex flex-1 gap-3 items-stretch min-w-0">
+            <div id="about-para-box" className="flex flex-1 gap-3 items-stretch min-w-0">
               {/* Left brackets */}
               <div className="flex flex-col justify-between shrink-0 w-4">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15 1H1V15" stroke="#1f1f1f" strokeWidth="1.2"/></svg>
@@ -305,6 +305,7 @@ export default async function Home() {
               <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f] text-sm uppercase leading-[1.1]">002</p>
               <div className="relative w-[436px] shrink-0 overflow-hidden" style={{ aspectRatio: "436/614" }}>
                 <img src={aboutImg} alt="Portrait" className="absolute inset-[-1%] w-[102%] h-[102%] object-cover" />
+                <div id="about-img-overlay-desktop" className="absolute inset-0 bg-black pointer-events-none" style={{ transformOrigin: "right center" }} />
               </div>
             </div>
           </div>
@@ -331,17 +332,18 @@ export default async function Home() {
           {/* Full-width photo */}
           <div className="relative w-full overflow-hidden" style={{ aspectRatio: "422/594" }}>
             <img src={aboutImg} alt="Portrait" className="absolute inset-[-1%] w-[102%] h-[102%] object-cover" />
+            <div id="about-img-overlay-mobile" className="absolute inset-0 bg-black pointer-events-none" style={{ transformOrigin: "right center" }} />
           </div>
         </div>
       </section>
 
       {/* ── Full-width photo ── */}
-      <div className="w-full h-[300px] md:h-[900px] overflow-hidden">
-        <img src={fullWidthImg} alt="" className="w-full h-full object-cover" />
+      <div id="fullwidth-section" data-nav-dark className="w-full h-[300px] md:h-[900px] overflow-hidden">
+        <img id="fullwidth-img" src={fullWidthImg} alt="" className="w-full h-full object-cover" style={{ filter: "blur(24px)", transform: "scale(1.05)" }} />
       </div>
 
       {/* ── Services ── */}
-      <section id="services" className="bg-black px-4 md:px-8 py-[60px] md:py-[80px] flex flex-col gap-12">
+      <section id="services" data-nav-dark className="bg-black px-4 md:px-8 py-[60px] md:py-[80px] flex flex-col gap-12">
         <p className="font-[family-name:var(--font-geist-mono)] text-white text-sm uppercase leading-[1.1]">[ services ]</p>
         <div className="flex items-center justify-between">
           <span className="font-light text-white uppercase tracking-[-0.08em] leading-none" style={{ fontSize: "clamp(48px, 6.67vw, 96px)" }}>
@@ -353,28 +355,28 @@ export default async function Home() {
         </div>
         <div className="flex flex-col gap-10">
           {services.map((s) => (
-            <div key={s.title} className="flex flex-col gap-2">
+            <div key={s.title} data-service-row className="flex flex-col gap-2">
               <p className="font-[family-name:var(--font-geist-mono)] text-white text-sm uppercase leading-[1.1]">{s.num}</p>
-              <div className="w-full h-px bg-white/40" />
+              <div data-service-line className="w-full h-px bg-white/60 origin-left" />
               {/* Mobile */}
               <div className="flex flex-col gap-2 pt-1 md:hidden">
-                <p className="font-bold italic text-white uppercase text-[28px] tracking-[-0.04em] leading-[1.1]">{s.title}</p>
+                <p data-service-title className="font-bold italic text-white uppercase text-[28px] tracking-[-0.04em] leading-[1.1]">{s.title}</p>
                 <p className="text-white text-sm font-normal leading-[1.3] tracking-[-0.04em]">
                   Placeholder description of this service. Explain the value you provide and the outcomes clients can expect. Keep it to two or three sentences.
                 </p>
                 <div className="shrink-0 overflow-hidden aspect-square w-[26vw]">
-                  <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
+                  <img data-service-img src={s.img} alt={s.title} className="w-full h-full object-cover" />
                 </div>
               </div>
               {/* Desktop */}
               <div className="hidden md:flex flex-row items-start justify-between gap-4 pt-1">
-                <p className="font-bold italic text-white uppercase text-[36px] tracking-[-0.04em] leading-[1.1]">{s.title}</p>
+                <p data-service-title className="font-bold italic text-white uppercase text-[36px] tracking-[-0.04em] leading-[1.1]">{s.title}</p>
                 <div className="flex gap-6 items-start">
                   <p className="text-white text-sm font-normal leading-[1.3] tracking-[-0.04em] max-w-[393px]">
                     Placeholder description of this service. Explain the value you provide and the outcomes clients can expect. Keep it to two or three sentences.
                   </p>
                   <div className="shrink-0 -mr-8 overflow-hidden aspect-square w-[151px]">
-                    <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
+                    <img data-service-img src={s.img} alt={s.title} className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
@@ -418,9 +420,9 @@ export default async function Home() {
             {/* Left column */}
             <div className="flex flex-col flex-1">
               {/* Card 1 — Surfers Paradise — tall aspect */}
-              <div className="flex flex-col gap-[10px]">
+              <div data-work-card className="flex flex-col gap-[10px] cursor-default">
                 <div className="relative w-full overflow-hidden" style={{ aspectRatio: "676/744" }}>
-                  {works[0]?.img && <img src={works[0].img} alt={works[0].title} className="absolute inset-0 w-full h-full object-cover" />}
+                  {works[0]?.img && <img data-work-img src={works[0].img} alt={works[0].title} className="absolute inset-0 w-full h-full object-cover" />}
                   <div className="absolute bottom-4 left-4 flex gap-3">
                     {works[0].tags.map((t) => (
                       <span key={t} className="backdrop-blur-[10px] bg-white/30 px-2 py-1 rounded-[24px] text-[#111] text-sm font-medium tracking-[-0.04em]">{t}</span>
@@ -428,16 +430,16 @@ export default async function Home() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <p className="font-black text-black uppercase text-[36px] tracking-[-1.44px] leading-[1.1]">{works[0].title}</p>
+                  <p data-work-title className="font-black text-black uppercase text-[36px] tracking-[-1.44px] leading-[1.1]">{works[0].title}</p>
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="shrink-0">
                     <path d="M8 24L24 8M24 8H13M24 8V19" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
               </div>
               {/* Card 2 — Cyberpunk Caffe — shorter aspect */}
-              <div className="flex flex-col gap-[10px]" style={{ marginTop: "1.74%" }}>
+              <div data-work-card className="flex flex-col gap-[10px] cursor-default" style={{ marginTop: "8.5%" }}>
                 <div className="relative w-full overflow-hidden" style={{ aspectRatio: "676/699" }}>
-                  {works[1]?.img && <img src={works[1].img} alt={works[1].title} className="absolute inset-0 w-full h-full object-cover" />}
+                  {works[1]?.img && <img data-work-img src={works[1].img} alt={works[1].title} className="absolute inset-0 w-full h-full object-cover" />}
                   <div className="absolute bottom-4 left-4 flex gap-3">
                     {works[1].tags.map((t) => (
                       <span key={t} className="backdrop-blur-[10px] bg-white/30 px-2 py-1 rounded-[24px] text-[#111] text-sm font-medium tracking-[-0.04em]">{t}</span>
@@ -445,7 +447,7 @@ export default async function Home() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <p className="font-black text-black uppercase text-[36px] tracking-[-1.44px] leading-[1.1]">{works[1].title}</p>
+                  <p data-work-title className="font-black text-black uppercase text-[36px] tracking-[-1.44px] leading-[1.1]">{works[1].title}</p>
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="shrink-0">
                     <path d="M8 24L24 8M24 8H13M24 8V19" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -461,9 +463,7 @@ export default async function Home() {
                   <p className="italic text-[#1f1f1f] text-[14px] font-normal leading-[1.3] tracking-[-0.04em]">
                     Discover how my creativity transforms ideas into impactful digital experiences — schedule a call with me to get started.
                   </p>
-                  <a href="#contact" className="self-start flex items-center justify-center px-4 py-3 bg-black rounded-[24px] text-white text-sm font-medium tracking-[-0.04em]">
-                    Let&apos;s talk
-                  </a>
+                  <MagneticButton href="#contact">Let&apos;s talk</MagneticButton>
                 </div>
                 <div className="flex flex-col justify-between shrink-0 w-4">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 1H15V15" stroke="#1f1f1f" strokeWidth="1.2"/></svg>
@@ -474,9 +474,9 @@ export default async function Home() {
             {/* Right column — offset down proportionally (240/1376 ≈ 17.44% of container width) */}
             <div className="flex flex-col flex-1 gap-[10px]" style={{ paddingTop: "17.44%" }}>
               {/* Card 3 — Agency 976 — shorter aspect */}
-              <div className="flex flex-col gap-[10px]">
+              <div data-work-card className="flex flex-col gap-[10px] cursor-default">
                 <div className="relative w-full overflow-hidden" style={{ aspectRatio: "676/699" }}>
-                  {works[2]?.img && <img src={works[2].img} alt={works[2].title} className="absolute inset-0 w-full h-full object-cover" />}
+                  {works[2]?.img && <img data-work-img src={works[2].img} alt={works[2].title} className="absolute inset-0 w-full h-full object-cover" />}
                   <div className="absolute bottom-4 left-4 flex gap-3">
                     {works[2].tags.map((t) => (
                       <span key={t} className="backdrop-blur-[10px] bg-white/30 px-2 py-1 rounded-[24px] text-[#111] text-sm font-medium tracking-[-0.04em]">{t}</span>
@@ -484,16 +484,16 @@ export default async function Home() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <p className="font-black text-black uppercase text-[36px] tracking-[-1.44px] leading-[1.1]">{works[2].title}</p>
+                  <p data-work-title className="font-black text-black uppercase text-[36px] tracking-[-1.44px] leading-[1.1]">{works[2].title}</p>
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="shrink-0">
                     <path d="M8 24L24 8M24 8H13M24 8V19" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
               </div>
               {/* Card 4 — Minimal Playground — tall aspect, gap 117/1376 ≈ 8.5% */}
-              <div className="flex flex-col gap-[10px]" style={{ marginTop: "8.5%" }}>
+              <div data-work-card className="flex flex-col gap-[10px] cursor-default" style={{ marginTop: "8.5%" }}>
                 <div className="relative w-full overflow-hidden" style={{ aspectRatio: "676/744" }}>
-                  {works[3]?.img && <img src={works[3].img} alt={works[3].title} className="absolute inset-0 w-full h-full object-cover" />}
+                  {works[3]?.img && <img data-work-img src={works[3].img} alt={works[3].title} className="absolute inset-0 w-full h-full object-cover" />}
                   <div className="absolute bottom-4 left-4 flex gap-3">
                     {works[3].tags.map((t) => (
                       <span key={t} className="backdrop-blur-[10px] bg-white/30 px-2 py-1 rounded-[24px] text-[#111] text-sm font-medium tracking-[-0.04em]">{t}</span>
@@ -501,7 +501,7 @@ export default async function Home() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <p className="font-black text-black uppercase text-[36px] tracking-[-1.44px] leading-[1.1]">{works[3].title}</p>
+                  <p data-work-title className="font-black text-black uppercase text-[36px] tracking-[-1.44px] leading-[1.1]">{works[3].title}</p>
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="shrink-0">
                     <path d="M8 24L24 8M24 8H13M24 8V19" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -540,9 +540,7 @@ export default async function Home() {
                 <p className="italic text-[#1f1f1f] text-[14px] font-normal leading-[1.3] tracking-[-0.04em]">
                   Discover how my creativity transforms ideas into impactful digital experiences — schedule a call with me to get started.
                 </p>
-                <a href="#contact" className="self-start flex items-center justify-center px-4 py-3 bg-black rounded-[24px] text-white text-sm font-medium tracking-[-0.04em]">
-                  Let&apos;s talk
-                </a>
+                <MagneticButton href="#contact">Let&apos;s talk</MagneticButton>
               </div>
               <div className="flex flex-col justify-between shrink-0 w-4">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 1H15V15" stroke="#1f1f1f" strokeWidth="1.2"/></svg>
@@ -576,7 +574,7 @@ export default async function Home() {
       </section>
 
       {/* Desktop scattered layout (≥ 769px) — all positions/sizes in vw so it scales with viewport */}
-      <section className="hidden min-[769px]:block relative overflow-hidden" style={{ height: "clamp(500px, 68.5vw, 987px)" }}>
+      <section id="testimonials-desktop" className="hidden min-[769px]:block relative overflow-hidden" style={{ height: "clamp(500px, 68.5vw, 987px)" }}>
         {/* Heading — centered */}
         <h2
           className="absolute font-medium text-black capitalize text-center leading-[1.1] tracking-[-0.07em] w-full"
@@ -584,17 +582,24 @@ export default async function Home() {
         >
           Testimonials
         </h2>
-        {/* Cards — left in vw, top in % of section height (derived from 1440×987 design canvas) */}
+        {/* Cards */}
         {[
           { name: testimonials[1].name, logo: testimonials[1].logo, logoW: testimonials[1].logoW, logoH: testimonials[1].logoH, quote: testimonials[1].quote, rotate: -6.85, left: "7.08vw",  top: "14.4%" },
           { name: testimonials[0].name, logo: testimonials[0].logo, logoW: testimonials[0].logoW, logoH: testimonials[0].logoH, quote: testimonials[0].quote, rotate:  2.9,  left: "46.94vw", top: "27.6%" },
           { name: testimonials[2].name, logo: testimonials[2].logo, logoW: testimonials[2].logoW, logoH: testimonials[2].logoH, quote: testimonials[2].quote, rotate:  2.23, left: "21.18vw", top: "56%" },
           { name: testimonials[3].name, logo: testimonials[3].logo, logoW: testimonials[3].logoW, logoH: testimonials[3].logoH, quote: testimonials[3].quote, rotate: -4.15, left: "68.54vw", top: "55.3%" },
         ].map((card, i) => (
-          <div key={i} className="absolute" style={{ left: card.left, top: card.top, width: "clamp(200px, 24.5vw, 353px)" }}>
+          <div
+            key={i}
+            data-tcard
+            data-rotate={card.rotate}
+            className="absolute cursor-default"
+            style={{ left: card.left, top: card.top, width: "clamp(200px, 24.5vw, 353px)" }}
+          >
             <div
+              data-tcard-inner
               className="bg-[#f1f1f1] border border-[#ddd] rounded-[4px] p-6 flex flex-col gap-4 w-full"
-              style={{ transform: `rotate(${card.rotate}deg)` }}
+              style={{ transform: `rotate(${card.rotate}deg)`, boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}
             >
               <div style={{ position: "relative", width: card.logoW, height: card.logoH, flexShrink: 0, maxWidth: "100%" }}>
                 <img src={card.logo} alt={card.name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none" }} />
@@ -663,14 +668,15 @@ export default async function Home() {
           <div className="flex items-start gap-8 ml-auto" style={{ scrollSnapType: "x mandatory" }}>
 
           {/* Card 1 */}
-          <div className="flex flex-col gap-4 shrink-0 w-[calc((100vw-336px)/2.2)] lg:w-[353px]" style={{ scrollSnapAlign: "start" }}>
+          <div data-news-card className="flex flex-col gap-4 shrink-0 w-[calc((100vw-336px)/2.2)] lg:w-[353px]" style={{ scrollSnapAlign: "start" }}>
             <div className="w-full overflow-hidden" style={{ aspectRatio: "353/469" }}>
-              <img src={newsImg1} alt="" className="w-full h-full object-cover" />
+              <img data-news-img src={newsImg1} alt="" className="w-full h-full object-cover" />
             </div>
             <p className="text-[#1f1f1f] text-[14px] font-normal leading-[1.3] tracking-[-0.04em]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
-            <a href="#" className="flex items-center gap-[10px] border-b border-black pb-1 w-fit">
+            <a href="#" className="flex items-center gap-[10px] pb-1 w-fit relative">
+              <span data-news-line className="absolute bottom-0 left-0 h-px bg-black w-full origin-left" />
               <span className="text-black text-sm font-medium tracking-[-0.04em]">Read more</span>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path d="M4 14L14 4M14 4H7M14 4V11" stroke="black" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -682,14 +688,15 @@ export default async function Home() {
           <div className="self-stretch shrink-0" style={{ width: 1, background: "rgba(31,31,31,0.15)" }} />
 
           {/* Card 2 — offset down */}
-          <div className="flex flex-col gap-4 shrink-0 pt-[120px] w-[calc((100vw-336px)/2.2)] lg:w-[353px]" style={{ scrollSnapAlign: "start" }}>
+          <div data-news-card className="flex flex-col gap-4 shrink-0 pt-[120px] w-[calc((100vw-336px)/2.2)] lg:w-[353px]" style={{ scrollSnapAlign: "start" }}>
             <div className="w-full overflow-hidden" style={{ aspectRatio: "353/469" }}>
-              <img src={newsImg2} alt="" className="w-full h-full object-cover" />
+              <img data-news-img src={newsImg2} alt="" className="w-full h-full object-cover" />
             </div>
             <p className="text-[#1f1f1f] text-[14px] font-normal leading-[1.3] tracking-[-0.04em]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
-            <a href="#" className="flex items-center gap-[10px] border-b border-black pb-1 w-fit">
+            <a href="#" className="flex items-center gap-[10px] pb-1 w-fit relative">
+              <span data-news-line className="absolute bottom-0 left-0 h-px bg-black w-full origin-left" />
               <span className="text-black text-sm font-medium tracking-[-0.04em]">Read more</span>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path d="M4 14L14 4M14 4H7M14 4V11" stroke="black" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -701,14 +708,15 @@ export default async function Home() {
           <div className="self-stretch shrink-0" style={{ width: 1, background: "rgba(31,31,31,0.15)" }} />
 
           {/* Card 3 */}
-          <div className="flex flex-col gap-4 shrink-0 w-[calc((100vw-336px)/2.2)] lg:w-[353px]" style={{ scrollSnapAlign: "start" }}>
+          <div data-news-card className="flex flex-col gap-4 shrink-0 w-[calc((100vw-336px)/2.2)] lg:w-[353px]" style={{ scrollSnapAlign: "start" }}>
             <div className="w-full overflow-hidden" style={{ aspectRatio: "353/469" }}>
-              <img src={newsImg3} alt="" className="w-full h-full object-cover" />
+              <img data-news-img src={newsImg3} alt="" className="w-full h-full object-cover" />
             </div>
             <p className="text-[#1f1f1f] text-[14px] font-normal leading-[1.3] tracking-[-0.04em]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
-            <a href="#" className="flex items-center gap-[10px] border-b border-black pb-1 w-fit">
+            <a href="#" className="flex items-center gap-[10px] pb-1 w-fit relative">
+              <span data-news-line className="absolute bottom-0 left-0 h-px bg-black w-full origin-left" />
               <span className="text-black text-sm font-medium tracking-[-0.04em]">Read more</span>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path d="M4 14L14 4M14 4H7M14 4V11" stroke="black" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -721,8 +729,10 @@ export default async function Home() {
         </div>
 
       </section>
-      {/* ── Footer ── */}
-      <footer id="contact" className="bg-black overflow-hidden">
+      </div>{/* end scrolling content wrapper */}
+
+      {/* ── Footer — sticky at bottom, revealed as content scrolls away ── */}
+      <footer id="contact" data-nav-dark className="sticky bottom-0 bg-black overflow-hidden">
 
         {/* ── Mobile footer ── */}
         <div className="md:hidden flex flex-col pt-12 gap-6">
@@ -734,12 +744,7 @@ export default async function Home() {
                 <strong className="font-black not-italic">project</strong>
                 <em className="font-light italic"> in mind?</em>
               </p>
-              <a
-                href="mailto:hikaustav.design@gmail.com"
-                className="self-start flex items-center justify-center px-4 py-3 border border-white rounded-[24px] text-white text-sm font-medium tracking-[-0.04em]"
-              >
-                Let&apos;s talk
-              </a>
+              <MagneticButton href="mailto:hikaustav.design@gmail.com" variant="light">Let&apos;s talk</MagneticButton>
             </div>
             <div className="flex flex-col gap-3 text-white text-[18px] font-normal leading-[1.1] uppercase tracking-[-0.04em]">
               <p>Facebook</p>
@@ -785,12 +790,7 @@ export default async function Home() {
                   <strong className="font-black not-italic">project</strong>
                   <em className="font-light italic"> in mind?</em>
                 </p>
-                <a
-                  href="mailto:hikaustav.design@gmail.com"
-                  className="self-start flex items-center justify-center px-4 py-3 border border-white rounded-[24px] text-white text-sm font-medium tracking-[-0.04em] hover:bg-white hover:text-black transition-colors"
-                >
-                  Let&apos;s talk
-                </a>
+                <MagneticButton href="mailto:hikaustav.design@gmail.com" variant="light">Let&apos;s talk</MagneticButton>
               </div>
               <div className="text-white text-[18px] font-normal leading-[1.1] uppercase tracking-[-0.04em] text-center space-y-1 w-[298px]">
                 <p>Facebook</p>
