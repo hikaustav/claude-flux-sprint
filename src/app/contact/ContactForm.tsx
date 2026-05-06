@@ -2,6 +2,8 @@
 
 import { FormEvent, useState } from "react";
 
+const FORMSPARK_URL = "https://submit-form.com/oMcuQzQWZ";
+
 const projectTypes = [
   "Brand Identity",
   "Web Design & Dev",
@@ -18,6 +20,10 @@ const budgets = [
   "Let's discuss",
 ];
 
+const PILL_BASE = "block font-[family-name:var(--font-geist-mono)] text-xs uppercase leading-[1.1] px-4 py-2.5 rounded-full border transition-all duration-200 select-none";
+const PILL_INACTIVE = "border-[#1f1f1f]/20 text-[#1f1f1f]/50";
+const PILL_ACTIVE = "border-[#1f1f1f] bg-[#1f1f1f] text-white";
+
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
 type ContactFormProps = {
@@ -26,43 +32,53 @@ type ContactFormProps = {
 
 export function ContactForm({ contactEmail }: ContactFormProps) {
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [selectedProjectType, setSelectedProjectType] = useState<string | null>(null);
+  const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState("");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    if (!selectedProjectType) {
+      setValidationError("Please select a project type.");
+      return;
+    }
+    if (!selectedBudget) {
+      setValidationError("Please select a budget range.");
+      return;
+    }
+
+    setValidationError("");
+    setSubmitState("submitting");
+
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    setSubmitState("submitting");
-    setErrorMessage("");
-
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(FORMSPARK_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
-          name: formData.get("name"),
+          full_name: formData.get("full_name"),
           email: formData.get("email"),
-          projectType: formData.get("project_type"),
-          budget: formData.get("budget"),
+          project_type: selectedProjectType,
+          budget_range: selectedBudget,
           timeline: formData.get("timeline"),
           message: formData.get("message"),
-          companyWebsite: formData.get("company_website"),
         }),
       });
 
-      const result = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        throw new Error(result.error || "Could not send your message.");
-      }
+      if (!response.ok) throw new Error();
 
       form.reset();
+      setSelectedProjectType(null);
+      setSelectedBudget(null);
       setSubmitState("success");
-    } catch (error) {
+    } catch {
       setSubmitState("error");
-      setErrorMessage(error instanceof Error ? error.message : "Could not send your message.");
     }
   }
 
@@ -71,8 +87,6 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
   return (
     <form
       className="flex flex-col gap-10 flex-1 min-w-0"
-      action="/api/contact"
-      method="POST"
       autoComplete="on"
       onSubmit={handleSubmit}
     >
@@ -83,7 +97,7 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
         <div className="relative">
           <input
             type="text"
-            name="name"
+            name="full_name"
             placeholder="Your name"
             autoComplete="name"
             required
@@ -112,20 +126,18 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
         <label className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[11px] uppercase leading-[1.1] tracking-[0.04em]">
           Type of project
         </label>
+        <input type="hidden" name="project_type" value={selectedProjectType ?? ""} />
         <div className="flex flex-wrap gap-2">
-          {projectTypes.map((type, index) => (
-            <label key={type} data-pill className="cursor-pointer">
-              <input
-                type="radio"
-                name="project_type"
-                value={type}
-                defaultChecked={index === 0}
-                className="sr-only peer"
-              />
-              <span className="block font-[family-name:var(--font-geist-mono)] text-xs uppercase leading-[1.1] px-4 py-2.5 rounded-full border border-[#1f1f1f]/20 text-[#1f1f1f]/50 peer-checked:border-[#1f1f1f] peer-checked:text-[#1f1f1f] peer-checked:bg-[#1f1f1f] peer-checked:text-white transition-all duration-200 select-none">
-                {type}
-              </span>
-            </label>
+          {projectTypes.map((type) => (
+            <button
+              key={type}
+              type="button"
+              data-pill
+              onClick={() => setSelectedProjectType(type)}
+              className={`cursor-pointer ${PILL_BASE} ${selectedProjectType === type ? PILL_ACTIVE : PILL_INACTIVE}`}
+            >
+              {type}
+            </button>
           ))}
         </div>
       </div>
@@ -134,20 +146,18 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
         <label className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[11px] uppercase leading-[1.1] tracking-[0.04em]">
           Budget range
         </label>
+        <input type="hidden" name="budget_range" value={selectedBudget ?? ""} />
         <div className="flex flex-wrap gap-2">
-          {budgets.map((budget, index) => (
-            <label key={budget} data-pill className="cursor-pointer">
-              <input
-                type="radio"
-                name="budget"
-                value={budget}
-                defaultChecked={index === 0}
-                className="sr-only peer"
-              />
-              <span className="block font-[family-name:var(--font-geist-mono)] text-xs uppercase leading-[1.1] px-4 py-2.5 rounded-full border border-[#1f1f1f]/20 text-[#1f1f1f]/50 peer-checked:border-[#1f1f1f] peer-checked:text-[#1f1f1f] peer-checked:bg-[#1f1f1f] peer-checked:text-white transition-all duration-200 select-none">
-                {budget}
-              </span>
-            </label>
+          {budgets.map((budget) => (
+            <button
+              key={budget}
+              type="button"
+              data-pill
+              onClick={() => setSelectedBudget(budget)}
+              className={`cursor-pointer ${PILL_BASE} ${selectedBudget === budget ? PILL_ACTIVE : PILL_INACTIVE}`}
+            >
+              {budget}
+            </button>
           ))}
         </div>
       </div>
@@ -181,12 +191,15 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
         />
       </div>
 
-      {/* Hidden honeypot field to catch bots */}
+      {/* Honeypot — hidden via CSS so bots fill it, humans don't see it */}
       <input
-        name="company_website"
-        type="hidden"
+        name="_gotcha"
+        type="text"
         autoComplete="off"
+        tabIndex={-1}
+        aria-hidden="true"
         defaultValue=""
+        style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}
       />
 
       <div data-form-field className="flex flex-col items-start gap-3">
@@ -202,10 +215,11 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
           aria-live="polite"
           className="min-h-4 font-[family-name:var(--font-geist-mono)] text-xs uppercase leading-[1.3] text-[#1f1f1f]/50"
         >
-          {submitState === "success" && "Message saved. I will reply soon."}
+          {validationError && validationError}
+          {submitState === "success" && "Your message has been sent. I'll be in touch soon."}
           {submitState === "error" && (
             <>
-              {errorMessage}{" "}
+              {"Something went wrong. Please try again. "}
               <a href={`mailto:${contactEmail}`} className="underline underline-offset-4">
                 Email directly
               </a>
