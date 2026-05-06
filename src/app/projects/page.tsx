@@ -57,7 +57,7 @@ export default async function ProjectsPage() {
       <div
         id="project-preview"
         className="fixed top-0 left-0 z-50 pointer-events-none hidden md:block"
-        style={{ width: 280, height: 360 }}
+        style={{ width: 280, height: 360, opacity: 0 }}
       >
         {/* src intentionally omitted — GSAP sets it dynamically on row hover */}
         {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -110,52 +110,79 @@ export default async function ServicesPage() {
           {/* Mid rule */}
           <div data-hero-rule className="w-full h-px bg-[#1f1f1f]/20 origin-left" />
 
-          {/* Main headline */}
-          <div className="flex flex-col gap-1 py-8 md:py-12">
+          {/* Main headline — desktop: left number col + right headline; mobile: stacked */}
+          <div className="py-8 md:py-14">
+
             {/* Mobile */}
-            <div className="md:hidden flex flex-col gap-1">
-              {["What", "I", "build", "for you."].map((word, i) => (
-                <h1
-                  key={i}
-                  data-hero-line
-                  className="font-light text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.07em]"
-                  style={{ fontSize: "clamp(52px, 17vw, 96px)" }}
-                >
-                  {word}
-                </h1>
-              ))}
+            <div className="md:hidden flex flex-col gap-3">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/30 text-[11px] uppercase leading-[1.1] tracking-[0.12em]">
+                Brand · Web · Photo · Marketing
+              </p>
+              <h1
+                data-hero-line
+                className="font-black text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.05em]"
+                style={{ fontSize: "clamp(48px, 16vw, 88px)" }}
+              >
+                Built<br />
+                <em className="font-[family-name:var(--font-playfair)] not-italic italic font-normal text-[#1f1f1f]/50">to move</em><br />
+                people.
+              </h1>
             </div>
-            {/* Desktop — staggered offsets like the about page headline */}
-            <div className="hidden md:flex flex-col gap-1">
-              <h1
-                data-hero-line
-                className="font-light text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.07em]"
-                style={{ fontSize: "clamp(72px, 10.5vw, 152px)" }}
-              >
-                What I
-              </h1>
-              <h1
-                data-hero-line
-                className="font-light text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.07em]"
-                style={{ fontSize: "clamp(72px, 10.5vw, 152px)", paddingLeft: "18vw" }}
-              >
-                build for
-              </h1>
-              <div className="flex items-end gap-6" style={{ paddingLeft: "36vw" }}>
+
+            {/* Desktop — two columns */}
+            <div className="hidden md:flex items-stretch gap-0">
+
+              {/* Left col — number + discipline tags */}
+              <div data-hero-line className="flex flex-col justify-between pr-12 shrink-0" style={{ width: "22vw" }}>
+                <span
+                  className="font-black text-[#1f1f1f]/08 leading-none tracking-[-0.06em] select-none"
+                  style={{ fontSize: "clamp(80px, 14vw, 200px)", color: "rgba(31,31,31,0.06)" }}
+                >
+                  03
+                </span>
+                <div className="flex flex-col gap-2 pb-2">
+                  {["Brand Identity", "Web Design & Dev", "Photography", "Marketing"].map((d) => (
+                    <p key={d} className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[11px] uppercase leading-[1.1] tracking-[0.06em]">
+                      — {d}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+              {/* Vertical divider */}
+              <div className="w-px bg-[#1f1f1f]/15 shrink-0 self-stretch" />
+
+              {/* Right col — headline */}
+              <div className="flex flex-col justify-end pl-12 flex-1">
                 <h1
                   data-hero-line
-                  className="font-light text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.07em]"
-                  style={{ fontSize: "clamp(72px, 10.5vw, 152px)" }}
+                  className="font-black text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.06em]"
+                  style={{ fontSize: "clamp(64px, 9.5vw, 138px)" }}
                 >
-                  you.
+                  Built
                 </h1>
-                <p
+                <h1
                   data-hero-line
-                  className="font-[family-name:var(--font-playfair)] italic text-[#1f1f1f]/40 leading-[1.1] tracking-[-0.03em] mb-4"
-                  style={{ fontSize: "clamp(16px, 1.4vw, 22px)" }}
+                  className="font-[family-name:var(--font-playfair)] italic font-normal text-[#1f1f1f]/45 leading-[0.92] tracking-[-0.03em]"
+                  style={{ fontSize: "clamp(64px, 9.5vw, 138px)" }}
                 >
-                  Four disciplines,<br />one creative practice.
-                </p>
+                  to move
+                </h1>
+                <div className="flex items-end gap-6">
+                  <h1
+                    data-hero-line
+                    className="font-black text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.06em]"
+                    style={{ fontSize: "clamp(64px, 9.5vw, 138px)" }}
+                  >
+                    people.
+                  </h1>
+                  <p
+                    data-hero-line
+                    className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/35 text-[11px] uppercase leading-[1.4] tracking-[0.06em] mb-3"
+                  >
+                    Four disciplines,<br />one creative practice.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -164,18 +191,18 @@ export default async function ServicesPage() {
           <div data-hero-rule className="w-full h-px bg-[#1f1f1f]/20 origin-left" />
 
           {/* Stats strip */}
-          <div data-hero-line className="flex items-center justify-between py-4 gap-4 overflow-x-auto">
+          <div data-hero-line className="grid grid-cols-2 md:flex md:items-center md:justify-between py-4 gap-x-4 gap-y-5 md:gap-4">
             {[
               { label: "Disciplines", value: "4" },
               { label: "Years active", value: "8+" },
               { label: "Projects delivered", value: "120+" },
               { label: "Based in", value: "Chicago, IL" },
             ].map((s) => (
-              <div key={s.label} className="flex flex-col gap-1 shrink-0">
-                <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[10px] uppercase leading-[1.1] whitespace-nowrap">
+              <div key={s.label} className="flex flex-col gap-1">
+                <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[10px] uppercase leading-[1.1]">
                   {s.label}
                 </p>
-                <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f] text-sm uppercase leading-[1.1] whitespace-nowrap">
+                <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f] text-sm uppercase leading-[1.1]">
                   {s.value}
                 </p>
               </div>

@@ -1,12 +1,14 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function AboutAnimations() {
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
 
       // ── Hero entry — portrait slides up, text items stagger in ──────

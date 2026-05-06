@@ -76,35 +76,39 @@ export default async function NewsPage() {
 
           <div data-hero-rule className="w-full h-px bg-[#1f1f1f]/20 origin-left" />
 
-          {/* Headline */}
-          <div className="py-8 md:py-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div className="flex flex-col gap-1">
-              <h1
+          {/* Headline — full-width single word + italic subtitle */}
+          <div className="pt-6 md:pt-10 pb-4 md:pb-6 flex flex-col gap-0">
+            <h1
+              data-hero-line
+              className="font-black text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.06em] w-full"
+              style={{ fontSize: "clamp(72px, 17.5vw, 252px)" }}
+            >
+              Journal.
+            </h1>
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 md:gap-0 pt-4 md:pt-5">
+              <p
                 data-hero-line
-                className="font-light text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.07em]"
-                style={{ fontSize: "clamp(52px, 10.5vw, 152px)" }}
+                className="font-[family-name:var(--font-playfair)] italic text-[#1f1f1f]/40 leading-[1.15] tracking-[-0.02em]"
+                style={{ fontSize: "clamp(18px, 2.2vw, 32px)" }}
               >
-                Stories,
-              </h1>
-              <h1
-                data-hero-line
-                className="font-light text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.07em]"
-                style={{ fontSize: "clamp(52px, 10.5vw, 152px)", paddingLeft: "clamp(24px, 10vw, 148px)" }}
-              >
-                thoughts
-              </h1>
-              <h1
-                data-hero-line
-                className="font-light text-[#1f1f1f] uppercase leading-[0.88] tracking-[-0.07em]"
-                style={{ fontSize: "clamp(52px, 10.5vw, 152px)", paddingLeft: "clamp(48px, 22vw, 318px)" }}
-              >
-                &amp; updates.
-              </h1>
-            </div>
-            <div data-hero-line className="flex flex-col gap-2 md:text-right shrink-0 md:pb-3">
-              <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-xs uppercase leading-[1.1]">8 articles</p>
-              <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-xs uppercase leading-[1.1]">Latest: Mar 2024</p>
-              <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-xs uppercase leading-[1.1]">[ Essays & notes ]</p>
+                Stories, thoughts &amp; updates<br className="hidden md:block" /> from the studio.
+              </p>
+              <div data-hero-line className="flex items-center gap-6 md:gap-8 md:pb-1 shrink-0">
+                <div className="flex flex-col gap-1">
+                  <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/30 text-[10px] uppercase leading-[1.1] tracking-[0.08em]">Articles</p>
+                  <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f] text-sm leading-[1.1]">8</p>
+                </div>
+                <div className="w-px h-8 bg-[#1f1f1f]/15" />
+                <div className="flex flex-col gap-1">
+                  <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/30 text-[10px] uppercase leading-[1.1] tracking-[0.08em]">Latest</p>
+                  <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f] text-sm leading-[1.1]">Mar 2024</p>
+                </div>
+                <div className="w-px h-8 bg-[#1f1f1f]/15" />
+                <div className="flex flex-col gap-1">
+                  <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/30 text-[10px] uppercase leading-[1.1] tracking-[0.08em]">Category</p>
+                  <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f] text-sm leading-[1.1]">Essays &amp; Notes</p>
+                </div>
+              </div>
             </div>
           </div>
 
