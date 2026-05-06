@@ -106,5 +106,10 @@ export function ServicesAnimations() {
     return () => ctx.revert();
   }, []);
 
-  return null;
+  return (
+    <style>{`
+      [data-hero-line] { opacity: 0; }
+      [data-hero-rule] { transform: scaleX(0); transform-origin: left center; }
+    `}</style>
+  );
 }

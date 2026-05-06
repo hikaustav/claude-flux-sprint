@@ -106,5 +106,11 @@ export function ProjectsAnimations() {
     return () => { ctx.revert(); removeMouseMove?.(); };
   }, []);
 
-  return null;
+  return (
+    <style>{`
+      [data-hero-line] { opacity: 0; }
+      [data-hero-rule] { transform: scaleX(0); transform-origin: left center; }
+      [data-filter-tag] { opacity: 0; }
+    `}</style>
+  );
 }

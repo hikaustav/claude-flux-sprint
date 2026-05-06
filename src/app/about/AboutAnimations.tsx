@@ -123,5 +123,10 @@ export function AboutAnimations() {
     return () => ctx.revert();
   }, []);
 
-  return null;
+  return (
+    <style>{`
+      #about-portrait { opacity: 0; }
+      [data-hero-item] { opacity: 0; }
+    `}</style>
+  );
 }

@@ -60,5 +60,13 @@ export function ContactAnimations() {
     return () => ctx.revert();
   }, []);
 
-  return null;
+  return (
+    <style>{`
+      #contact-statement { opacity: 0; }
+      #contact-meta { opacity: 0; }
+      [data-header-rule] { transform: scaleX(0); transform-origin: left center; }
+      [data-form-field] { opacity: 0; }
+      [data-info-block] { opacity: 0; }
+    `}</style>
+  );
 }
