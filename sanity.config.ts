@@ -63,6 +63,15 @@ export default defineConfig({
                 S.documentTypeList("newsPost").title("News Posts")
               ),
 
+            S.divider(),
+
+            // ── Contact ───────────────────────────────────────────
+            S.listItem()
+              .title("Contact")
+              .child(
+                S.documentTypeList("contactSubmission").title("Contact Submissions")
+              ),
+
           ]),
     }),
     visionTool(),

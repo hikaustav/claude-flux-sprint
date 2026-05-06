@@ -3,28 +3,13 @@ import { siteSettingsQuery } from "@/sanity/queries";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { ContactAnimations } from "./ContactAnimations";
+import { ContactForm } from "./ContactForm";
 
 type SiteSettings = {
   contactEmail?: string; contactTagline?: string;
   availabilityStatus?: boolean; availabilityNote?: string;
   socials?: { label?: string; url?: string }[];
 };
-
-const projectTypes = [
-  "Brand Identity",
-  "Web Design & Dev",
-  "Photography",
-  "Marketing",
-  "Something else",
-];
-
-const budgets = [
-  "< $5k",
-  "$5k – $15k",
-  "$15k – $30k",
-  "$30k+",
-  "Let's discuss",
-];
 
 const socials = [
   { label: "Instagram", href: "#" },
@@ -108,129 +93,7 @@ export default async function ContactPage() {
           <div className="flex flex-col md:flex-row gap-14 md:gap-20">
 
             {/* ── Form ── */}
-            <form
-              className="flex flex-col gap-10 flex-1 min-w-0"
-              action={`mailto:${contactEmail}`}
-              method="POST"
-              encType="text/plain"
-            >
-              {/* Name */}
-              <div data-form-field className="flex flex-col gap-2 group">
-                <label className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[11px] uppercase leading-[1.1] tracking-[0.04em]">
-                  Full name
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Your name"
-                    required
-                    className="w-full bg-transparent border-0 border-b border-[#1f1f1f]/15 pb-3 text-[#1f1f1f] font-normal leading-[1.2] tracking-[-0.02em] placeholder:text-[#1f1f1f]/25 outline-none focus:border-[#1f1f1f] transition-colors duration-300"
-                    style={{ fontSize: "clamp(18px, 2vw, 26px)" }}
-                  />
-                </div>
-              </div>
-
-              {/* Email */}
-              <div data-form-field className="flex flex-col gap-2">
-                <label className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[11px] uppercase leading-[1.1] tracking-[0.04em]">
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="you@company.com"
-                  required
-                  className="w-full bg-transparent border-0 border-b border-[#1f1f1f]/15 pb-3 text-[#1f1f1f] font-normal leading-[1.2] tracking-[-0.02em] placeholder:text-[#1f1f1f]/25 outline-none focus:border-[#1f1f1f] transition-colors duration-300"
-                  style={{ fontSize: "clamp(18px, 2vw, 26px)" }}
-                />
-              </div>
-
-              {/* Project type pills */}
-              <div data-form-field className="flex flex-col gap-4">
-                <label className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[11px] uppercase leading-[1.1] tracking-[0.04em]">
-                  Type of project
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {projectTypes.map((t, i) => (
-                    <label key={t} data-pill className="cursor-pointer">
-                      <input
-                        type="radio"
-                        name="project_type"
-                        value={t}
-                        defaultChecked={i === 0}
-                        className="sr-only peer"
-                      />
-                      <span className="block font-[family-name:var(--font-geist-mono)] text-xs uppercase leading-[1.1] px-4 py-2.5 rounded-full border border-[#1f1f1f]/20 text-[#1f1f1f]/50 peer-checked:border-[#1f1f1f] peer-checked:text-[#1f1f1f] peer-checked:bg-[#1f1f1f] peer-checked:text-white transition-all duration-200 select-none">
-                        {t}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Budget pills */}
-              <div data-form-field className="flex flex-col gap-4">
-                <label className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[11px] uppercase leading-[1.1] tracking-[0.04em]">
-                  Budget range
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {budgets.map((b, i) => (
-                    <label key={b} data-pill className="cursor-pointer">
-                      <input
-                        type="radio"
-                        name="budget"
-                        value={b}
-                        defaultChecked={i === 0}
-                        className="sr-only peer"
-                      />
-                      <span className="block font-[family-name:var(--font-geist-mono)] text-xs uppercase leading-[1.1] px-4 py-2.5 rounded-full border border-[#1f1f1f]/20 text-[#1f1f1f]/50 peer-checked:border-[#1f1f1f] peer-checked:text-[#1f1f1f] peer-checked:bg-[#1f1f1f] peer-checked:text-white transition-all duration-200 select-none">
-                        {b}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Timeline */}
-              <div data-form-field className="flex flex-col gap-2">
-                <label className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[11px] uppercase leading-[1.1] tracking-[0.04em]">
-                  Ideal start date / timeline
-                </label>
-                <input
-                  type="text"
-                  name="timeline"
-                  placeholder="e.g. ASAP, Q3 2024, flexible…"
-                  className="w-full bg-transparent border-0 border-b border-[#1f1f1f]/15 pb-3 text-[#1f1f1f] font-normal leading-[1.2] tracking-[-0.02em] placeholder:text-[#1f1f1f]/25 outline-none focus:border-[#1f1f1f] transition-colors duration-300"
-                  style={{ fontSize: "clamp(18px, 2vw, 26px)" }}
-                />
-              </div>
-
-              {/* Message */}
-              <div data-form-field className="flex flex-col gap-2">
-                <label className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[11px] uppercase leading-[1.1] tracking-[0.04em]">
-                  Tell me about your project
-                </label>
-                <textarea
-                  name="message"
-                  rows={4}
-                  placeholder="The more you share, the better I can help…"
-                  required
-                  className="w-full bg-transparent border-0 border-b border-[#1f1f1f]/15 pb-3 text-[#1f1f1f] font-normal leading-[1.4] tracking-[-0.02em] placeholder:text-[#1f1f1f]/25 outline-none focus:border-[#1f1f1f] transition-colors duration-300 resize-none"
-                  style={{ fontSize: "clamp(16px, 1.6vw, 22px)" }}
-                />
-              </div>
-
-              {/* Submit */}
-              <div data-form-field>
-                <button
-                  type="submit"
-                  className="relative inline-flex w-fit cursor-pointer items-center justify-center overflow-hidden rounded-[24px] bg-black px-4 py-3 text-sm font-medium tracking-[-0.04em] text-white transition-opacity duration-200 hover:opacity-80"
-                >
-                  Send message
-                </button>
-              </div>
-            </form>
+            <ContactForm contactEmail={contactEmail} />
 
             {/* ── Info sidebar ── */}
             <div className="flex flex-col gap-10 md:w-[280px] shrink-0">
