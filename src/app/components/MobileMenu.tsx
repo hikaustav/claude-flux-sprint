@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { MagneticButton } from "./MagneticButton";
 
 const navLinks = ["About", "Services", "Projects", "News", "Contact"];
+const navHrefs: Record<string, string> = { About: "/about", Services: "/services", Projects: "/projects", News: "/news", Contact: "/contact" };
 
 export function MobileMenuButton({ isDark = false }: { isDark?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -95,21 +97,21 @@ export function MobileMenuButton({ isDark = false }: { isDark?: boolean }) {
 
         <nav className="flex flex-col gap-6 flex-1">
           {navLinks.map((l, i) => (
-            <a
+            <Link
               key={l}
               ref={(el) => { if (el) linksRef.current[i] = el; }}
-              href={`#${l.toLowerCase()}`}
+              href={navHrefs[l]}
               onClick={close}
               className="text-white text-5xl font-light tracking-[-0.04em] uppercase leading-none w-fit overflow-hidden group relative"
             >
               <span className="block transition-transform duration-300 group-hover:-translate-y-full">{l}</span>
               <span className="block absolute top-full left-0 transition-transform duration-300 group-hover:-translate-y-full opacity-50">{l}</span>
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div ref={ctaRef}>
-          <MagneticButton href="#contact" variant="light" className="w-full">
+          <MagneticButton href="/contact" variant="light" className="w-full">
             Let&apos;s talk
           </MagneticButton>
         </div>

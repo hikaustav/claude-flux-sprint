@@ -1,7 +1,9 @@
 import { siteSettings } from "./siteSettings";
-import { service } from "./service";
-import { work } from "./work";
-import { testimonial } from "./testimonial";
-import { newsPost } from "./newsPost";
+import { service }      from "./service";
+import { work }         from "./work";
+import { testimonial }  from "./testimonial";
+import { newsPost }     from "./newsPost";
+import { milestone }    from "./milestone";
+import { discipline }   from "./discipline";
 
-export const schemaTypes = [siteSettings, service, work, testimonial, newsPost];
+export const schemaTypes = [siteSettings, service, work, testimonial, newsPost, milestone, discipline];
