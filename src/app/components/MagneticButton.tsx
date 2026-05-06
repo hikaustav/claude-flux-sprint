@@ -15,7 +15,6 @@ export function MagneticButton({ href, children, className = "", variant = "dark
   const fillRef = useRef<HTMLSpanElement>(null);
 
   const isDark = variant === "dark";
-  const fillColor  = isDark ? "#ffffff" : "#1f1f1f";
   const textIn     = isDark ? "#000000" : "#ffffff";
   const textOut    = isDark ? "#ffffff" : "#000000";
   const bgClass    = isDark ? "bg-black"  : "bg-white";

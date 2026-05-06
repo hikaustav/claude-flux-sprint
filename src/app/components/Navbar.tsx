@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MagneticButton } from "./MagneticButton";
@@ -8,9 +9,10 @@ import { MobileMenuButton } from "./MobileMenu";
 gsap.registerPlugin(ScrollTrigger);
 
 const navLinks = ["About", "Services", "Projects", "News", "Contact"];
+const navHrefs: Record<string, string> = { About: "/about", Services: "/services", Projects: "/projects", News: "/news", Contact: "/contact" };
 
 export function Navbar() {
-  const logoRef    = useRef<HTMLSpanElement>(null);
+  const logoRef    = useRef<HTMLAnchorElement>(null);
   const linksRef   = useRef<HTMLDivElement>(null);
   const isDarkRef  = useRef(false);
   const [isDark, setIsDark] = useState(false);
@@ -64,13 +66,14 @@ export function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between py-6 px-4 md:px-8">
-      <span
-        ref={logoRef}
+      <Link
+        href="/"
+        ref={logoRef as React.RefObject<HTMLAnchorElement>}
         className="font-semibold tracking-[-0.04em] text-black capitalize"
         style={{ fontSize: "22px" }}
       >
         H.Studio
-      </span>
+      </Link>
 
       <div
         ref={linksRef}
@@ -79,7 +82,7 @@ export function Navbar() {
         {navLinks.map((l) => (
           <a
             key={l}
-            href={`#${l.toLowerCase()}`}
+            href={navHrefs[l] ?? `#${l.toLowerCase()}`}
             className="relative overflow-hidden group h-[1.2em] flex items-center"
           >
             <span className="nav-link-text block text-black transition-transform duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">
@@ -92,9 +95,9 @@ export function Navbar() {
         ))}
       </div>
 
-      <div className="hidden lg:block">
+      <div className="hidden md:block">
         <MagneticButton
-          href="#contact"
+          href="/contact"
           variant={isDark ? "light" : "dark"}
         >
           Let&apos;s talk

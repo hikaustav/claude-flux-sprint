@@ -7,6 +7,8 @@ import { ServicesHover } from "./components/ServicesHover";
 import { TestimonialsParallax } from "./components/TestimonialsParallax";
 import { Navbar } from "./components/Navbar";
 import { TestimonialsSlider } from "./components/TestimonialsSlider";
+import { HomePreloader } from "./components/HomePreloader";
+import { Footer } from "./components/Footer";
 
 const heroImg = "https://www.figma.com/api/mcp/asset/70bd3925-df9d-40e3-b81e-68f8a6fc939b";
 const aboutImg = "https://www.figma.com/api/mcp/asset/4a142a70-e9cd-45ba-a039-049153adb5c9";
@@ -89,10 +91,9 @@ export default async function Home() {
     img: w.image?.asset?.url ?? staticWorkImgs[i] ?? staticWorkImgs[0],
   }));
 
-  const navLinks = ["About", "Services", "Projects", "News", "Contact"];
-
   return (
     <main className="bg-[#fafafa] font-[family-name:var(--font-inter)] relative">
+      <HomePreloader />
       <Navbar />
       {/* Scrolling content sits above the sticky footer */}
       <div className="relative z-10 bg-[#fafafa]">
@@ -731,103 +732,7 @@ export default async function Home() {
       </section>
       </div>{/* end scrolling content wrapper */}
 
-      {/* ── Footer — sticky at bottom, revealed as content scrolls away ── */}
-      <footer id="contact" data-nav-dark className="sticky bottom-0 bg-black overflow-hidden">
-
-        {/* ── Mobile footer ── */}
-        <div className="md:hidden flex flex-col pt-12 gap-6">
-          {/* Contact + socials — padded */}
-          <div className="flex flex-col gap-6 px-4">
-            <div className="flex flex-col gap-3">
-              <p className="text-white text-[24px] leading-[1.1] tracking-[-0.04em] uppercase">
-                <em className="font-light italic">Have a </em>
-                <strong className="font-black not-italic">project</strong>
-                <em className="font-light italic"> in mind?</em>
-              </p>
-              <MagneticButton href="mailto:hikaustav.design@gmail.com" variant="light">Let&apos;s talk</MagneticButton>
-            </div>
-            <div className="flex flex-col gap-3 text-white text-[18px] font-normal leading-[1.1] uppercase tracking-[-0.04em]">
-              <p>Facebook</p>
-              <p>Instagram</p>
-              <p>x.com</p>
-              <p>Linkedin</p>
-            </div>
-          </div>
-
-          {/* Divider — full bleed */}
-          <div className="w-full h-px bg-white/30" />
-
-          {/* Legal links + Coded By Claude — padded */}
-          <div className="flex flex-col gap-4 px-4">
-            <div className="flex items-center text-white text-[12px] font-normal uppercase tracking-[-0.03em]" style={{ gap: 12 }}>
-              <a href="#" className="underline">licences</a>
-              <a href="#" className="underline">Privacy policy</a>
-            </div>
-            <p className="font-[family-name:var(--font-geist-mono)] text-white text-[10px] uppercase leading-[1.1]">
-              [ Coded By Claude ]
-            </p>
-          </div>
-
-          {/* H.Studio wordmark — full bleed, no px, clips naturally */}
-          <div className="w-full overflow-hidden">
-            <span
-              className="block font-semibold text-white capitalize whitespace-nowrap tracking-[-0.06em] leading-[0.82]"
-              style={{ fontSize: "24vw" }}
-            >
-              H.Studio
-            </span>
-          </div>
-        </div>
-
-        {/* ── Desktop footer ── */}
-        <div className="hidden md:flex flex-col pt-12 px-8 gap-[120px]">
-          {/* Top: contact + socials + divider */}
-          <div className="flex flex-col gap-12">
-            <div className="flex items-start justify-between">
-              <div className="flex flex-col gap-3 w-[298px]">
-                <p className="text-white text-[24px] leading-[1.1] tracking-[-0.04em] uppercase">
-                  <em className="font-light italic">Have a </em>
-                  <strong className="font-black not-italic">project</strong>
-                  <em className="font-light italic"> in mind?</em>
-                </p>
-                <MagneticButton href="mailto:hikaustav.design@gmail.com" variant="light">Let&apos;s talk</MagneticButton>
-              </div>
-              <div className="text-white text-[18px] font-normal leading-[1.1] uppercase tracking-[-0.04em] text-center space-y-1 w-[298px]">
-                <p>Facebook</p>
-                <p>Instagram</p>
-              </div>
-              <div className="text-white text-[18px] font-normal leading-[1.1] uppercase tracking-[-0.04em] text-right space-y-1 w-[298px]">
-                <p>x.com</p>
-                <p>Linkedin</p>
-              </div>
-            </div>
-            <div className="w-full h-px bg-white" />
-          </div>
-
-          {/* Bottom: H.Studio wordmark + legal links */}
-          <div className="relative w-full" style={{ height: "calc(20vw * 0.85 + 80px)" }}>
-            {/* [ Coded By Claude ] vertical on the left */}
-            <div className="absolute flex items-center justify-center" style={{ left: 0, top: "50%", transform: "translateY(-50%)", height: "60%", width: 15 }}>
-              <p className="font-[family-name:var(--font-geist-mono)] text-white text-[11px] uppercase leading-[1.1] whitespace-nowrap [writing-mode:vertical-rl] rotate-180">
-                [ Coded By Claude ]
-              </p>
-            </div>
-            {/* H.Studio wordmark — bleeds right, clipped by footer overflow-hidden */}
-            <span
-              className="absolute font-semibold text-white capitalize whitespace-nowrap tracking-[-0.06em]"
-              style={{ fontSize: "20vw", lineHeight: 0.85, bottom: 40, left: 15 + 4 }}
-            >
-              H.Studio
-            </span>
-            {/* Legal links — pinned bottom-right, 4px above wordmark bottom, 4px between links */}
-            <div className="absolute right-0 flex items-center text-white text-[12px] font-normal uppercase tracking-[-0.03em]" style={{ bottom: 44, gap: 12 }}>
-              <a href="#" className="underline hover:opacity-70">licences</a>
-              <a href="#" className="underline hover:opacity-70">Privacy policy</a>
-            </div>
-          </div>
-        </div>
-
-      </footer>
+      <Footer />
     </main>
   );
 }
