@@ -20,6 +20,35 @@ function makeReveal(triggerId: string, overlayId: string, start = "top 80%", end
   });
 }
 
+// Split an element's children into per-character inline spans, return them in DOM order
+function splitToChars(el: HTMLElement): HTMLElement[] {
+  const chars: HTMLElement[] = [];
+  const nodes = Array.from(el.childNodes);
+  el.innerHTML = "";
+
+  nodes.forEach((node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      for (const ch of node.textContent ?? "") {
+        const span = document.createElement("span");
+        span.style.display = "inline-block";
+        span.style.whiteSpace = "pre";
+        span.textContent = ch;
+        el.appendChild(span);
+        chars.push(span);
+      }
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      // Keep element nodes (e.g. <em>) intact, wrap as a single char unit
+      const wrapper = document.createElement("span");
+      wrapper.style.display = "inline-block";
+      wrapper.appendChild(node);
+      el.appendChild(wrapper);
+      chars.push(wrapper);
+    }
+  });
+
+  return chars;
+}
+
 export function FullWidthReveal() {
   useEffect(() => {
     // Blur-to-clear on the full-width image
@@ -36,6 +65,44 @@ export function FullWidthReveal() {
             gsap.set(fullImg, { filter: `blur(${blur}px)`, scale });
           },
           onLeaveBack: () => gsap.set(fullImg, { filter: "blur(24px)", scale: 1.05 }),
+        })
+      : null;
+
+    // ── Per-character headline scrub, right-to-left ──
+    // Only animate the visible layout (desktop or mobile)
+    const isMobile = window.innerWidth < 768;
+    const containerId = isMobile ? "#about-headline-mobile" : "#about-headline-desktop";
+    const lines = Array.from(document.querySelectorAll<HTMLElement>(`${containerId} [data-about-line]`));
+
+    // Split each line into chars; collect all in DOM order, then reverse for right-to-left
+    const allChars: HTMLElement[] = [];
+    lines.forEach((line) => {
+      allChars.push(...splitToChars(line));
+    });
+
+    // Left to right — DOM order
+    const ordered = [...allChars];
+    const total = ordered.length;
+
+    // Set initial color on all chars
+    ordered.forEach((ch) => gsap.set(ch, { color: "#d0d0d0" }));
+
+    const container = document.querySelector<HTMLElement>(containerId);
+    const headlineTrigger = container
+      ? ScrollTrigger.create({
+          trigger: container,
+          start: "top 85%",
+          end: "top 25%",
+          scrub: 2.2,
+          onUpdate: (self) => {
+            const p = self.progress;
+            ordered.forEach((ch, i) => {
+              const rawP = Math.max(0, Math.min(1, (p - i / total) / (1 / total)));
+              const charP = 1 - Math.pow(1 - rawP, 2); // quadratic ease-out — gentler
+              const v = Math.round(208 - charP * (208 - 31));
+              gsap.set(ch, { color: `rgb(${v},${v},${v})` });
+            });
+          },
         })
       : null;
 
@@ -62,6 +129,7 @@ export function FullWidthReveal() {
       t2?.kill();
       t3?.kill();
       t4?.kill();
+      headlineTrigger?.kill();
     };
   }, []);
 

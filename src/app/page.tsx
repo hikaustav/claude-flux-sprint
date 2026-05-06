@@ -219,28 +219,28 @@ export default async function Home() {
           </div>
 
           {/* ── Desktop layout — staggered, centered as a block ── */}
-          <div className="hidden md:flex flex-col gap-2 mx-auto">
+          <div id="about-headline-desktop" className="hidden md:flex flex-col gap-2 mx-auto">
             <div className="flex items-start gap-3">
-              <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)" }}>
+              <h2 data-about-line className="font-light uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)", color: "#d0d0d0" }}>
                 A creative director&nbsp;&nbsp;&nbsp;/
               </h2>
               <span className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f] text-sm leading-[1.1] shrink-0 mt-2">001</span>
             </div>
             <div style={{ paddingLeft: "14.86vw" }}>
-              <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)" }}>
+              <h2 data-about-line className="font-light uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)", color: "#d0d0d0" }}>
                 Photographer
               </h2>
             </div>
             <div style={{ paddingLeft: "42.36vw" }}>
-              <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)" }}>
+              <h2 data-about-line className="font-light uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)", color: "#d0d0d0" }}>
                 Born <em className="font-[family-name:var(--font-playfair)] not-italic italic">&amp;</em> raised
               </h2>
             </div>
-            <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)" }}>
+            <h2 data-about-line className="font-light uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)", color: "#d0d0d0" }}>
               on the south side
             </h2>
             <div style={{ paddingLeft: "42.08vw" }}>
-              <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)" }}>
+              <h2 data-about-line className="font-light uppercase leading-[0.84] tracking-[-0.08em] whitespace-nowrap" style={{ fontSize: "clamp(48px, 6.67vw, 96px)", color: "#d0d0d0" }}>
                 of chicago.
               </h2>
             </div>
@@ -250,21 +250,21 @@ export default async function Home() {
           </div>
 
           {/* ── Mobile layout — fluid vw scaling, all centred ── */}
-          <div className="md:hidden flex flex-col gap-2 items-center text-center">
+          <div id="about-headline-mobile" className="md:hidden flex flex-col gap-2 items-center text-center">
             <span className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f] text-sm leading-[1.1]">001</span>
-            <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em]" style={{ fontSize: "clamp(18px, 8.5vw, 32px)" }}>
+            <h2 data-about-line className="font-light uppercase leading-[0.84] tracking-[-0.08em]" style={{ fontSize: "clamp(18px, 8.5vw, 32px)", color: "#d0d0d0" }}>
               A creative director&nbsp;&nbsp;/
             </h2>
-            <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em]" style={{ fontSize: "clamp(18px, 8.5vw, 32px)" }}>
+            <h2 data-about-line className="font-light uppercase leading-[0.84] tracking-[-0.08em]" style={{ fontSize: "clamp(18px, 8.5vw, 32px)", color: "#d0d0d0" }}>
               Photographer
             </h2>
-            <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em]" style={{ fontSize: "clamp(18px, 8.5vw, 32px)" }}>
+            <h2 data-about-line className="font-light uppercase leading-[0.84] tracking-[-0.08em]" style={{ fontSize: "clamp(18px, 8.5vw, 32px)", color: "#d0d0d0" }}>
               Born <em className="font-[family-name:var(--font-playfair)] not-italic italic">&amp;</em> raised
             </h2>
-            <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em]" style={{ fontSize: "clamp(18px, 8.5vw, 32px)" }}>
+            <h2 data-about-line className="font-light uppercase leading-[0.84] tracking-[-0.08em]" style={{ fontSize: "clamp(18px, 8.5vw, 32px)", color: "#d0d0d0" }}>
               on the south side
             </h2>
-            <h2 className="font-light text-black uppercase leading-[0.84] tracking-[-0.08em]" style={{ fontSize: "clamp(18px, 8.5vw, 32px)" }}>
+            <h2 data-about-line className="font-light uppercase leading-[0.84] tracking-[-0.08em]" style={{ fontSize: "clamp(18px, 8.5vw, 32px)", color: "#d0d0d0" }}>
               of chicago.
             </h2>
             <p className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f] text-sm uppercase leading-[1.1] mt-3">
