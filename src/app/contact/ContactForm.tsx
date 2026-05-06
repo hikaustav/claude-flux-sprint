@@ -69,7 +69,13 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
   const isSubmitting = submitState === "submitting";
 
   return (
-    <form className="flex flex-col gap-10 flex-1 min-w-0" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col gap-10 flex-1 min-w-0"
+      action="/api/contact"
+      method="POST"
+      autoComplete="on"
+      onSubmit={handleSubmit}
+    >
       <div data-form-field className="flex flex-col gap-2 group">
         <label className="font-[family-name:var(--font-geist-mono)] text-[#1f1f1f]/40 text-[11px] uppercase leading-[1.1] tracking-[0.04em]">
           Full name
@@ -79,6 +85,7 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
             type="text"
             name="name"
             placeholder="Your name"
+            autoComplete="name"
             required
             className="w-full bg-transparent border-0 border-b border-[#1f1f1f]/15 pb-3 text-[#1f1f1f] font-normal leading-[1.2] tracking-[-0.02em] placeholder:text-[#1f1f1f]/25 outline-none focus:border-[#1f1f1f] transition-colors duration-300"
             style={{ fontSize: "clamp(18px, 2vw, 26px)" }}
@@ -94,6 +101,7 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
           type="email"
           name="email"
           placeholder="you@company.com"
+          autoComplete="email"
           required
           className="w-full bg-transparent border-0 border-b border-[#1f1f1f]/15 pb-3 text-[#1f1f1f] font-normal leading-[1.2] tracking-[-0.02em] placeholder:text-[#1f1f1f]/25 outline-none focus:border-[#1f1f1f] transition-colors duration-300"
           style={{ fontSize: "clamp(18px, 2vw, 26px)" }}
@@ -152,6 +160,7 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
           type="text"
           name="timeline"
           placeholder="e.g. ASAP, Q3 2026, flexible"
+          autoComplete="off"
           className="w-full bg-transparent border-0 border-b border-[#1f1f1f]/15 pb-3 text-[#1f1f1f] font-normal leading-[1.2] tracking-[-0.02em] placeholder:text-[#1f1f1f]/25 outline-none focus:border-[#1f1f1f] transition-colors duration-300"
           style={{ fontSize: "clamp(18px, 2vw, 26px)" }}
         />
@@ -165,6 +174,7 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
           name="message"
           rows={4}
           placeholder="The more you share, the better I can help"
+          autoComplete="off"
           required
           className="w-full bg-transparent border-0 border-b border-[#1f1f1f]/15 pb-3 text-[#1f1f1f] font-normal leading-[1.4] tracking-[-0.02em] placeholder:text-[#1f1f1f]/25 outline-none focus:border-[#1f1f1f] transition-colors duration-300 resize-none"
           style={{ fontSize: "clamp(16px, 1.6vw, 22px)" }}
@@ -172,17 +182,12 @@ export function ContactForm({ contactEmail }: ContactFormProps) {
       </div>
 
       {/* Hidden honeypot field to catch bots */}
-      <div className="hidden" aria-hidden="true">
-        <label htmlFor="company_website">Website</label>
-        <input
-          id="company_website"
-          name="company_website"
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-          defaultValue=""
-        />
-      </div>
+      <input
+        name="company_website"
+        type="hidden"
+        autoComplete="off"
+        defaultValue=""
+      />
 
       <div data-form-field className="flex flex-col items-start gap-3">
         <button
